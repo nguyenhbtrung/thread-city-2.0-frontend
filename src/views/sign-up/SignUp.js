@@ -1,9 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
 import Link from '@mui/material/Link';
@@ -15,6 +13,7 @@ import { styled } from '@mui/material/styles';
 import AppTheme from '../shared-theme/AppTheme';
 import { SitemarkIcon } from './CustomIcons';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
+import FormHelperText from '@mui/material/FormHelperText';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -84,7 +83,7 @@ export default function SignUp(props) {
 
     if (!password.value || password.value.length < 6) {
       setPasswordError(true);
-      setPasswordErrorMessage('Mật khẩu phải có ít nhất 6 kí tự.');
+      setPasswordErrorMessage('Mật khẩu không hợp lệ.');
       isValid = false;
     } else {
       setPasswordError(false);
@@ -133,7 +132,7 @@ export default function SignUp(props) {
               fontFamily: 'Roboto, sans-serif'
             }}
           >
-            Đăng kí Sign Up
+            Đăng kí
           </Typography>
           <Box
             component="form"
@@ -149,9 +148,6 @@ export default function SignUp(props) {
                 fullWidth
                 id="name"
                 placeholder="Điền tên tài khoản"
-                error={nameError}
-                helperText={nameErrorMessage}
-                color={nameError ? 'error' : 'primary'}
                 sx={{
                   fontFamily: 'Roboto, sans-serif',
                   '& .MuiInputBase-input::placeholder': {
@@ -160,6 +156,12 @@ export default function SignUp(props) {
                   },
                 }}
               />
+              {/* Show error message if name is invalid */}
+              {nameError && (
+                <FormHelperText sx={{ fontSize: '14px', fontFamily: 'Roboto, sans-serif', color: 'error.main' }}>
+                  {nameErrorMessage}
+                </FormHelperText>
+              )}
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="email" sx={{ fontFamily: 'Roboto, sans-serif', textAlign: 'left' }}>Email</FormLabel>
@@ -171,9 +173,6 @@ export default function SignUp(props) {
                 name="email"
                 autoComplete="email"
                 variant="outlined"
-                error={emailError}
-                helperText={emailErrorMessage}
-                color={passwordError ? 'error' : 'primary'}
                 sx={{
                   fontFamily: 'Roboto, sans-serif',
                   '& .MuiInputBase-input::placeholder': {
@@ -182,6 +181,12 @@ export default function SignUp(props) {
                   },
                 }}
               />
+              {/* Show error message if email is invalid */}
+              {emailError && (
+                <FormHelperText sx={{ fontSize: '14px', fontFamily: 'Roboto, sans-serif', color: 'error.main' }}>
+                  {emailErrorMessage}
+                </FormHelperText>
+              )}
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="password" sx={{ fontFamily: 'Roboto, sans-serif', textAlign: 'left' }}>Mật khẩu</FormLabel>
@@ -194,9 +199,6 @@ export default function SignUp(props) {
                 id="password"
                 autoComplete="new-password"
                 variant="outlined"
-                error={passwordError}
-                helperText={passwordErrorMessage}
-                color={passwordError ? 'error' : 'primary'}
                 sx={{
                   fontFamily: 'Roboto, sans-serif',
                   '& .MuiInputBase-input::placeholder': {
@@ -205,6 +207,12 @@ export default function SignUp(props) {
                   },
                 }}
               />
+              {/* Show error message if password is invalid */}
+              {passwordError && (
+                <FormHelperText sx={{ fontSize: '14px', fontFamily: 'Roboto, sans-serif', color: 'error.main' }}>
+                  {passwordErrorMessage}
+                </FormHelperText>
+              )}
             </FormControl>
             <Button
               type="submit"
@@ -219,7 +227,7 @@ export default function SignUp(props) {
               Đã có tài khoản?{' '}
               <span>
                 <Link
-                  href="/material-ui/getting-started/templates/sign-in/"
+                  href="/sign-in"
                   variant="body2"
                   sx={{ alignSelf: 'center', fontFamily: 'Roboto, sans-serif' }}
                 >
