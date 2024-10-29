@@ -140,7 +140,7 @@ export default function SignIn(props) {
             }}
           >
             <FormControl>
-              <FormLabel htmlFor="email" sx={{textAlign: 'left' ,fontFamily: 'Roboto, sans-serif'}}>Email</FormLabel>
+              <FormLabel htmlFor="email" sx={{ textAlign: 'left', fontFamily: 'Roboto, sans-serif' }}>Email</FormLabel>
               <TextField
                 id="email"
                 type="email"
@@ -168,7 +168,7 @@ export default function SignIn(props) {
             </FormControl>
             <FormControl>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <FormLabel htmlFor="password" sx= {{fontFamily: 'Roboto, sans-serif'}} >Mật khẩu</FormLabel>
+                <FormLabel htmlFor="password" sx={{ fontFamily: 'Roboto, sans-serif' }} >Mật khẩu</FormLabel>
                 <Link
                   component="button"
                   type="button"
@@ -205,7 +205,7 @@ export default function SignIn(props) {
               )}
             </FormControl>
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary"  />}
+              control={<Checkbox value="remember" color="primary" />}
               sx={{ fontFamily: 'Roboto, sans-serif' }}
               label="Ghi nhớ tôi"
             />
@@ -223,7 +223,7 @@ export default function SignIn(props) {
               Chưa có tài khoản?{' '}
               <span>
                 <Link
-                  href="/material-ui/getting-started/templates/sign-in/"
+                  href="/sign-up"
                   variant="body2"
                   sx={{ textAlign: 'center', fontFamily: 'Roboto, sans-serif' }}
                 >
