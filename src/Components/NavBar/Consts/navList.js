@@ -36,13 +36,13 @@ export const mainNavItem = [
         id: 4,
         icon: <FavoriteBorderIcon />,
         label: 'Favorite',
-        route: 'route'
+        route: 'favorite'
     },
     {
         id: 5,
         icon: <PermIdentityIcon />,
         label: 'Profiles',
-        route: 'route'
+        route: 'profiles'
     },
     {
         id: 6,
@@ -54,7 +54,7 @@ export const mainNavItem = [
         id: 7,
         icon: <MenuIcon />,
         label: 'Menu',
-        route: 'route'
+        route: 'menu'
     },
 
 ]

@@ -8,15 +8,17 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { mainNavItem } from './Consts/navList';
+import { useParams, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
 
-    const drawerWidth = 200;
-    
+  const navigate = useNavigate();
 
-    return(
-        <div>
-            <Drawer
+  const drawerWidth = 200;
+
+  return (
+    <div>
+      <Drawer
         sx={{
           width: drawerWidth,
           flexShrink: 0,
@@ -33,19 +35,24 @@ const NavBar = () => {
         <Toolbar />
         <Divider />
         <List>
-          {mainNavItem.map((text, index) => (
-            <ListItem key={text.id} >
+          {mainNavItem.map((item, index) => (
+            <ListItem
+              button
+              key={item.id}
+              onClick={() => navigate(item.route)}>
               <ListItemButton>
-                <ListItemIcon sx={{color: '#FFFFFF'}}>
-                  {text.icon}
+                <ListItemIcon sx={{ color: '#FFFFFF' }}>
+                  {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={text.label} />
+                <ListItemText primary={item.label} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
       </Drawer>
-        </div>
-    )
-} 
+    </div>
+  )
+}
+
+
 export default NavBar;
