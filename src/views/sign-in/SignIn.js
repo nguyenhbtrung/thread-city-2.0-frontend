@@ -16,6 +16,7 @@ import ForgotPassword from './ForgotPassword';
 import { SitemarkIcon } from './CustomIcons';
 import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
+import FormHelperText from '@mui/material/FormHelperText';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -94,7 +95,7 @@ export default function SignIn(props) {
 
     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
       setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
+      setEmailErrorMessage('Hãy nhập email hợp lệ.');
       isValid = false;
     } else {
       setEmailError(false);
@@ -103,7 +104,7 @@ export default function SignIn(props) {
 
     if (!password.value || password.value.length < 6) {
       setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
+      setPasswordErrorMessage('Mật khẩu không hợp lệ');
       isValid = false;
     } else {
       setPasswordError(false);
@@ -123,9 +124,9 @@ export default function SignIn(props) {
           <Typography
             component="h1"
             variant="h4"
-            sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
+            sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)', fontFamily: 'Roboto, sans-serif' }}
           >
-            Sign in
+            Đăng nhập
           </Typography>
           <Box
             component="form"
@@ -139,41 +140,48 @@ export default function SignIn(props) {
             }}
           >
             <FormControl>
-              <FormLabel htmlFor="email">Email</FormLabel>
+              <FormLabel htmlFor="email" sx={{textAlign: 'left' ,fontFamily: 'Roboto, sans-serif'}}>Email</FormLabel>
               <TextField
-                error={emailError}
-                helperText={emailErrorMessage}
                 id="email"
                 type="email"
                 name="email"
-                placeholder="your@email.com"
+                placeholder="Điền email của bạn"
                 autoComplete="email"
                 autoFocus
                 required
                 fullWidth
                 variant="outlined"
-                color={emailError ? 'error' : 'primary'}
-                sx={{ ariaLabel: 'email' }}
+                sx={{
+                  fontFamily: 'Roboto, sans-serif',
+                  '& .MuiInputBase-input::placeholder': {
+                    fontFamily: 'Roboto, sans-serif',
+                    fontSize: '16px',
+                  },
+                }}
               />
+              {/* Show error message if email is invalid */}
+              {emailError && (
+                <FormHelperText sx={{ fontSize: '14px', fontFamily: 'Roboto, sans-serif', color: 'error.main' }}>
+                  {emailErrorMessage}
+                </FormHelperText>
+              )}
             </FormControl>
             <FormControl>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <FormLabel htmlFor="password">Password</FormLabel>
+                <FormLabel htmlFor="password" sx= {{fontFamily: 'Roboto, sans-serif'}} >Mật khẩu</FormLabel>
                 <Link
                   component="button"
                   type="button"
                   onClick={handleClickOpen}
                   variant="body2"
-                  sx={{ alignSelf: 'baseline' }}
+                  sx={{ alignSelf: 'baseline', fontFamily: 'Roboto, sans-serif' }}
                 >
-                  Forgot your password?
+                  Quên mật khẩu?
                 </Link>
               </Box>
               <TextField
-                error={passwordError}
-                helperText={passwordErrorMessage}
                 name="password"
-                placeholder="••••••"
+                placeholder="Điền mật khẩu của bạn"
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -181,12 +189,25 @@ export default function SignIn(props) {
                 required
                 fullWidth
                 variant="outlined"
-                color={passwordError ? 'error' : 'primary'}
+                sx={{
+                  fontFamily: 'Roboto, sans-serif',
+                  '& .MuiInputBase-input::placeholder': {
+                    fontFamily: 'Roboto, sans-serif',
+                    fontSize: '16px',
+                  },
+                }}
               />
+              {/* Show error message if password is invalid */}
+              {passwordError && (
+                <FormHelperText sx={{ fontSize: '14px', fontFamily: 'Roboto, sans-serif', color: 'error.main' }}>
+                  {passwordErrorMessage}
+                </FormHelperText>
+              )}
             </FormControl>
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              control={<Checkbox value="remember" color="primary"  />}
+              sx={{ fontFamily: 'Roboto, sans-serif' }}
+              label="Ghi nhớ tôi"
             />
             <ForgotPassword open={open} handleClose={handleClose} />
             <Button
@@ -194,18 +215,19 @@ export default function SignIn(props) {
               fullWidth
               variant="contained"
               onClick={validateInputs}
+              sx={{ fontFamily: 'Roboto, sans-serif' }}
             >
-              Sign in
+              Đăng nhập
             </Button>
-            <Typography sx={{ textAlign: 'center' }}>
-              Don&apos;t have an account?{' '}
+            <Typography sx={{ textAlign: 'center', fontFamily: 'Roboto, sans-serif' }}>
+              Chưa có tài khoản?{' '}
               <span>
                 <Link
                   href="/material-ui/getting-started/templates/sign-in/"
                   variant="body2"
-                  sx={{ alignSelf: 'center' }}
+                  sx={{ textAlign: 'center', fontFamily: 'Roboto, sans-serif' }}
                 >
-                  Sign up
+                  Đăng kí ngay
                 </Link>
               </span>
             </Typography>
