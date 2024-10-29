@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import SignIn from './views/sign-in/SignIn.js';
 import SignUp from './views/sign-up/SignUp.js';
+import NavBar from './Components/NavBar/NavBar.js';
 
 function App() {
   return (
@@ -21,8 +22,10 @@ function App() {
         </a>
       </header> */}
 
+      <NavBar/>
 
-      <SignUp />
+      {/* <SignUp /> */}
+
     </div>
 
         

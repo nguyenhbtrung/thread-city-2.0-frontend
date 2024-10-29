@@ -1,4 +1,9 @@
 .App {
+  background-color: #121212; /* Nền tối */
+  color: #ffffff; /* Chữ trắng */
+  min-height: 100vh; /* Bao phủ */
+  display: flex;
+  flex-direction: column;
   text-align: center;
 }
 
