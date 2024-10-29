@@ -14,6 +14,7 @@ import AppTheme from '../shared-theme/AppTheme';
 import { SitemarkIcon } from './CustomIcons';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import FormHelperText from '@mui/material/FormHelperText';
+import { useNavigate } from 'react-router-dom';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -114,6 +115,11 @@ export default function SignUp(props) {
       email: data.get('email'),
       password: data.get('password'),
     });
+  };
+
+  const navigate = useNavigate();
+  const handleSignInClick = () => {
+    navigate('/sign-in');
   };
 
   return (
@@ -227,9 +233,9 @@ export default function SignUp(props) {
               Đã có tài khoản?{' '}
               <span>
                 <Link
-                  href="/sign-in"
                   variant="body2"
                   sx={{ alignSelf: 'center', fontFamily: 'Roboto, sans-serif' }}
+                  onClick={handleSignInClick}
                 >
                   Đăng nhập
                 </Link>
