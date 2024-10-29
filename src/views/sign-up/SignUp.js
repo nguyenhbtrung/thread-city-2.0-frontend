@@ -141,7 +141,7 @@ export default function SignUp(props) {
             sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
           >
             <FormControl>
-              <FormLabel htmlFor="name" sx={{ fontFamily: 'Roboto, sans-serif' }}>Tên tài khoản</FormLabel>
+              <FormLabel htmlFor="name" sx={{ fontFamily: 'Roboto, sans-serif', textAlign: 'left' }}>Tên tài khoản</FormLabel>
               <TextField
                 autoComplete="name"
                 name="name"
@@ -162,7 +162,7 @@ export default function SignUp(props) {
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="email" sx={{ fontFamily: 'Roboto, sans-serif' }}>Email</FormLabel>
+              <FormLabel htmlFor="email" sx={{ fontFamily: 'Roboto, sans-serif', textAlign: 'left' }}>Email</FormLabel>
               <TextField
                 required
                 fullWidth
@@ -184,7 +184,7 @@ export default function SignUp(props) {
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="password" sx={{ fontFamily: 'Roboto, sans-serif' }}>Mật khẩu</FormLabel>
+              <FormLabel htmlFor="password" sx={{ fontFamily: 'Roboto, sans-serif', textAlign: 'left' }}>Mật khẩu</FormLabel>
               <TextField
                 required
                 fullWidth
