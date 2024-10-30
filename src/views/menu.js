@@ -2,7 +2,7 @@ import React from "react";
 
 const Menu = () => {
     return(
-        <div style={{marginLeft: '600px'}}>
+        <div style={{margin: 0}}>
             Trang cài đặt
         </div>
     )

@@ -2,7 +2,7 @@ import React from "react";
 
 const Pin = () => {
     return(
-        <div style={{marginLeft: '600px'}}>
+        <div style={{margin: 0}}>
             Trang lưu trữ
         </div>
     )
