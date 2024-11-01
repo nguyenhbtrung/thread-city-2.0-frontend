@@ -18,6 +18,7 @@ import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import FormHelperText from '@mui/material/FormHelperText';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -85,30 +86,42 @@ export default function SignIn(props) {
     setOpen(false);
   };
 
-  const handleSubmit = (event) => {
-    const data = new FormData(event.currentTarget);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      userName: userName,
+      password: password
     });
-  };
-
-  const validateInputs = () => {
-    const password = document.getElementById('password');
-
-    let isValid = true;
-
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Mật khẩu không hợp lệ');
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage('');
+    try{
+      const response = await axios.post('https://localhost:7135/api/User/login', {
+          userName: userName,
+          password: password
+      });
+      console.log('Đăng nhập thành công: ', response.data);
+      navigate('/home');
+    }
+    catch(error){
+      console.error('Error:', error);
     }
 
-    return isValid;
   };
+
+  // const validateInputs = () => {
+  //   const password = document.getElementById('password');
+
+  //   let isValid = true;
+
+  //   if (!password.value || password.value.length < 6) {
+  //     setPasswordError(true);
+  //     setPasswordErrorMessage('Mật khẩu không hợp lệ');
+  //     isValid = false;
+  //   } else {
+  //     setPasswordError(false);
+  //     setPasswordErrorMessage('');
+  //   }
+
+  //   return isValid;
+  // };
 
   const navigate = useNavigate();
   const handleSignUpClick = () => {
@@ -211,7 +224,6 @@ export default function SignIn(props) {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={validateInputs}
               sx={{ fontFamily: 'Roboto, sans-serif' }}
             >
               Đăng nhập
