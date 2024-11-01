@@ -15,6 +15,8 @@ import { SitemarkIcon } from './CustomIcons';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import FormHelperText from '@mui/material/FormHelperText';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useState } from 'react';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -59,68 +61,101 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignUp(props) {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  const [nameError, setNameError] = React.useState(false);
-  const [nameErrorMessage, setNameErrorMessage] = React.useState('');
+  const [emailError, setEmailError] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [nameError, setNameError] = useState(false);
+  const [nameErrorMessage, setNameErrorMessage] = useState('');
 
-  const validateInputs = () => {
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    const name = document.getElementById('name');
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
 
-    let isValid = true;
+  // const validateInputs = () => {
+  //   const email = document.getElementById('email');
+  //   const password = document.getElementById('password');
+  //   const name = document.getElementById('name');
 
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage('Hãy nhập email hợp lệ.');
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage('');
-    }
+  //   let isValid = true;
 
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Mật khẩu không hợp lệ.');
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage('');
-    }
+  //   if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+  //     setEmailError(true);
+  //     setEmailErrorMessage('Hãy nhập email hợp lệ.');
+  //     isValid = false;
+  //   } else {
+  //     setEmailError(false);
+  //     setEmailErrorMessage('');
+  //   }
 
-    if (!name.value || name.value.length < 1) {
-      setNameError(true);
-      setNameErrorMessage('Hãy nhập tên hợp lệ.');
-      isValid = false;
-    } else {
-      setNameError(false);
-      setNameErrorMessage('');
-    }
+  //   if (!password.value || password.value.length < 6) {
+  //     setPasswordError(true);
+  //     setPasswordErrorMessage('Mật khẩu không hợp lệ.');
+  //     isValid = false;
+  //   } else {
+  //     setPasswordError(false);
+  //     setPasswordErrorMessage('');
+  //   }
 
-    return isValid;
-  };
+  //   if (!name.value || name.value.length < 1) {
+  //     setNameError(true);
+  //     setNameErrorMessage('Hãy nhập tên hợp lệ.');
+  //     isValid = false;
+  //   } else {
+  //     setNameError(false);
+  //     setNameErrorMessage('');
+  //   }
 
-  const handleSubmit = (event) => {
-    if (nameError || emailError || passwordError) {
-      event.preventDefault();
-      return;
-    }
-    const data = new FormData(event.currentTarget);
+  //   return isValid;
+  // };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     console.log({
-      name: data.get('name'),
-      lastName: data.get('lastName'),
-      email: data.get('email'),
-      password: data.get('password'),
+      name: userName,
+      email: email,
+      phoneNumber: phoneNumber,
+      password: password,
     });
+    if (true) {
+      try {
+        const response = await axios.post('https://localhost:7135/api/User/register', {
+          username: userName,
+          email: email,
+          phoneNumber: phoneNumber,
+          password: password
+        });
+        console.log('Đăng kí thành công:', response.data);
+        navigate('/sign-in');
+      }
+      catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   const navigate = useNavigate();
   const handleSignInClick = () => {
     navigate('/sign-in');
   };
+
+  const handleUserNameChange = (event) => {
+    setUserName(event.target.value);
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handlePhoneNumberChange = (event) => {
+    setPhoneNumber(event.target.value);
+  };
+
 
   return (
     <AppTheme {...props}>
@@ -146,14 +181,16 @@ export default function SignUp(props) {
             sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
           >
             <FormControl>
-              <FormLabel htmlFor="name" sx={{ fontFamily: 'Roboto, sans-serif', textAlign: 'left' }}>Tên tài khoản</FormLabel>
+              <FormLabel htmlFor="userName" sx={{ fontFamily: 'Roboto, sans-serif', textAlign: 'left' }}>Tên tài khoản</FormLabel>
               <TextField
-                autoComplete="name"
-                name="name"
+                autoComplete="username"
+                name="userName"
                 required
                 fullWidth
-                id="name"
+                id="userName"
                 placeholder="Điền tên tài khoản"
+                value={userName}
+                onChange={handleUserNameChange}
                 sx={{
                   fontFamily: 'Roboto, sans-serif',
                   '& .MuiInputBase-input::placeholder': {
@@ -176,6 +213,7 @@ export default function SignUp(props) {
                 fullWidth
                 id="email"
                 placeholder="Điền email của bạn"
+                onChange={handleEmailChange}
                 name="email"
                 autoComplete="email"
                 variant="outlined"
@@ -201,8 +239,36 @@ export default function SignUp(props) {
                 fullWidth
                 name="password"
                 placeholder="Nhập mật khẩu"
+                onChange={handlePasswordChange}
                 type="password"
                 id="password"
+                autoComplete="new-password"
+                variant="outlined"
+                sx={{
+                  fontFamily: 'Roboto, sans-serif',
+                  '& .MuiInputBase-input::placeholder': {
+                    fontFamily: 'Roboto, sans-serif',
+                    fontSize: '16px',
+                  },
+                }}
+              />
+              {/* Show error message if password is invalid */}
+              {passwordError && (
+                <FormHelperText sx={{ fontSize: '14px', fontFamily: 'Roboto, sans-serif', color: 'error.main' }}>
+                  {passwordErrorMessage}
+                </FormHelperText>
+              )}
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="phoneNumber" sx={{ fontFamily: 'Roboto, sans-serif', textAlign: 'left' }}>Số điện thoại</FormLabel>
+              <TextField
+                required
+                fullWidth
+                name="phoneNumber"
+                placeholder="Nhập số điện thoại của bạn"
+                onChange={handlePhoneNumberChange}
+                type="phoneNumber"
+                id="phoneNumber"
                 autoComplete="new-password"
                 variant="outlined"
                 sx={{
@@ -224,7 +290,7 @@ export default function SignUp(props) {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={validateInputs}
+              // onClick={validateInputs}
               sx={{ fontFamily: 'Roboto, sans-serif' }}
             >
               Đăng kí

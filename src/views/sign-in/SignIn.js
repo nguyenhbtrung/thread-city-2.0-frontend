@@ -62,11 +62,20 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignIn(props) {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
+
+  const [userName, setUserName] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const handleUserNameChange = (event) => {
+    setUserName(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -77,10 +86,6 @@ export default function SignIn(props) {
   };
 
   const handleSubmit = (event) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
-      return;
-    }
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
@@ -89,19 +94,9 @@ export default function SignIn(props) {
   };
 
   const validateInputs = () => {
-    const email = document.getElementById('email');
     const password = document.getElementById('password');
 
     let isValid = true;
-
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage('Hãy nhập email hợp lệ.');
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage('');
-    }
 
     if (!password.value || password.value.length < 6) {
       setPasswordError(true);
@@ -146,17 +141,18 @@ export default function SignIn(props) {
             }}
           >
             <FormControl>
-              <FormLabel htmlFor="email" sx={{ textAlign: 'left', fontFamily: 'Roboto, sans-serif' }}>Email</FormLabel>
+              <FormLabel htmlFor="userName" sx={{ textAlign: 'left', fontFamily: 'Roboto, sans-serif' }}>Tên tài khoản</FormLabel>
               <TextField
-                id="email"
-                type="email"
-                name="email"
-                placeholder="Điền email của bạn"
+                id="userName"
+                type="userName"
+                name="userName"
+                placeholder="Nhập tên tài khoản"
                 autoComplete="email"
                 autoFocus
                 required
                 fullWidth
                 variant="outlined"
+                onChange={handleUserNameChange}
                 sx={{
                   fontFamily: 'Roboto, sans-serif',
                   '& .MuiInputBase-input::placeholder': {
@@ -165,12 +161,6 @@ export default function SignIn(props) {
                   },
                 }}
               />
-              {/* Show error message if email is invalid */}
-              {emailError && (
-                <FormHelperText sx={{ fontSize: '14px', fontFamily: 'Roboto, sans-serif', color: 'error.main' }}>
-                  {emailErrorMessage}
-                </FormHelperText>
-              )}
             </FormControl>
             <FormControl>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -195,6 +185,7 @@ export default function SignIn(props) {
                 required
                 fullWidth
                 variant="outlined"
+                onChange={handlePasswordChange}
                 sx={{
                   fontFamily: 'Roboto, sans-serif',
                   '& .MuiInputBase-input::placeholder': {
