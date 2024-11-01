@@ -1,9 +1,10 @@
 import React from "react";
+import Post from "./post";
 
 const Home = () => {
     return(
         <div style={{margin: 0}}>
-            Trang chủ
+            <Post/>
         </div>
     )
 }
