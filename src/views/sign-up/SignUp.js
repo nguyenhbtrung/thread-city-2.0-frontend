@@ -140,7 +140,7 @@ export default function SignUp(props) {
       setPasswordError(true);
       setPasswordErrorMessage('Mật khẩu quá ngắn!');
     }
-    else if (error === 'PasswordRequresNonAlphanumeric') {
+    else if (error === 'PasswordRequiresNonAlphanumeric') {
       setPasswordError(true);
       setPasswordErrorMessage('Mật khẩu thiếu ký tự đặc biệt!');
     }
