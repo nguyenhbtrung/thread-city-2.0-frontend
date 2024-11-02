@@ -61,12 +61,8 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignUp(props) {
-  const [emailError, setEmailError] = useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-  const [nameError, setNameError] = useState(false);
-  const [nameErrorMessage, setNameErrorMessage] = useState('');
 
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
@@ -112,26 +108,20 @@ export default function SignUp(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log({
-      name: userName,
-      email: email,
-      phoneNumber: phoneNumber,
-      password: password,
-    });
-    if (true) {
-      try {
-        const response = await axios.post('https://localhost:7135/api/User/register', {
-          username: userName,
-          email: email,
-          phoneNumber: phoneNumber,
-          password: password
-        });
-        console.log('Đăng kí thành công:', response.data);
-        navigate('/sign-in');
-      }
-      catch (err) {
-        console.log(err);
-      }
+    try {
+      const response = await axios.post('https://localhost:7135/api/User/register', {
+        username: userName,
+        email: email,
+        phoneNumber: phoneNumber,
+        password: password
+      });
+      console.log('Đăng kí thành công:', response.data);
+      navigate('/sign-in');
+    }
+    catch (error) {
+      // setPasswordError(true);
+      // setPasswordErrorMessage(error.response.data);
+      console.log(error.response.data);
     }
   };
 
@@ -199,12 +189,6 @@ export default function SignUp(props) {
                   },
                 }}
               />
-              {/* Show error message if name is invalid */}
-              {nameError && (
-                <FormHelperText sx={{ fontSize: '14px', fontFamily: 'Roboto, sans-serif', color: 'error.main' }}>
-                  {nameErrorMessage}
-                </FormHelperText>
-              )}
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="email" sx={{ fontFamily: 'Roboto, sans-serif', textAlign: 'left' }}>Email</FormLabel>
@@ -225,12 +209,6 @@ export default function SignUp(props) {
                   },
                 }}
               />
-              {/* Show error message if email is invalid */}
-              {emailError && (
-                <FormHelperText sx={{ fontSize: '14px', fontFamily: 'Roboto, sans-serif', color: 'error.main' }}>
-                  {emailErrorMessage}
-                </FormHelperText>
-              )}
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="password" sx={{ fontFamily: 'Roboto, sans-serif', textAlign: 'left' }}>Mật khẩu</FormLabel>
@@ -252,12 +230,6 @@ export default function SignUp(props) {
                   },
                 }}
               />
-              {/* Show error message if password is invalid */}
-              {passwordError && (
-                <FormHelperText sx={{ fontSize: '14px', fontFamily: 'Roboto, sans-serif', color: 'error.main' }}>
-                  {passwordErrorMessage}
-                </FormHelperText>
-              )}
             </FormControl>
             <FormControl>
               <FormLabel htmlFor="phoneNumber" sx={{ fontFamily: 'Roboto, sans-serif', textAlign: 'left' }}>Số điện thoại</FormLabel>

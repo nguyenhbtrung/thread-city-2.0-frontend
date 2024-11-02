@@ -88,22 +88,26 @@ export default function SignIn(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log({
-      userName: userName,
-      password: password
-    });
-    try{
+    if (userName === '' || password === '') {
+      setPasswordError(true);
+      setPasswordErrorMessage('Tên tài khoản hoặc mật khẩu không được để trống');
+      return;
+    }
+    try {
       const response = await axios.post('https://localhost:7135/api/User/login', {
-          userName: userName,
-          password: password
+        userName: userName,
+        password: password
       });
       console.log('Đăng nhập thành công: ', response.data);
+      const token = response.data.token;
+      sessionStorage.setItem('token', token);
       navigate('/home');
     }
-    catch(error){
-      console.error('Error:', error);
+    catch (error) {
+      setPasswordError(true);
+      setPasswordErrorMessage(error.response.data);
+      console.error('Error:', error.response.data);
     }
-
   };
 
   // const validateInputs = () => {
