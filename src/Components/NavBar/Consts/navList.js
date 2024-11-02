@@ -5,56 +5,62 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import PushPinIcon from '@mui/icons-material/PushPin';
 import MenuIcon from '@mui/icons-material/Menu';
+import LogoutIcon from '@mui/icons-material/Logout';
 import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward'; //Logo tạm thời
 
 export const mainNavItem = [
     {
         id: 0, //Logo tạm thời
         icon: <AccessibleForwardIcon />,
-        label: 'T1',
+        label: 'Thread T1',
         route: 'home'
     },
     {
         id: 1,
         icon: <HomeIcon />,
-        label: 'Home',
+        label: 'Trang chủ',
         route: 'home'
     },
     {
         id: 2,
         icon: <SearchIcon />,
-        label: 'Search',
+        label: 'Tìm kiếm',
         route: 'search'
     },
     {
         id: 3,
         icon: <AddIcon />,
-        label: 'Post',
+        label: 'Đăng bài',
         route: 'post'
     },
     {
         id: 4,
         icon: <FavoriteBorderIcon />,
-        label: 'Favorite',
+        label: 'Yêu thích',
         route: 'favorite'
     },
     {
         id: 5,
         icon: <PermIdentityIcon />,
-        label: 'Profiles',
+        label: 'Cá nhân',
         route: 'profiles'
     },
     {
         id: 6,
         icon: <PushPinIcon />,
-        label: 'Pin',
+        label: 'Lưu trữ',
         route: 'pin'
     },
     {
         id: 7,
         icon: <MenuIcon />,
-        label: 'Menu',
+        label: 'Cài đặt',
         route: 'menu'
     },
-
+    {
+        id: 8,
+        icon: <LogoutIcon />,
+        label: 'Đăng xuất',
+        route: 'sign-in'
+    },
 ]
