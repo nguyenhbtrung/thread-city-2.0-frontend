@@ -119,11 +119,49 @@ export default function SignUp(props) {
       navigate('/sign-in');
     }
     catch (error) {
-      // setPasswordError(true);
-      // setPasswordErrorMessage(error.response.data);
-      console.log(error.response.data);
+      if (error.response.status === 400) {
+        setPasswordError(true);
+        setPasswordErrorMessage('Email không hợp lệ!');
+      }
+      else if (error.response.status === 500) {
+        const errors = error.response.data;
+        displayError(errors[0].code);
+        console.log(error.response.data);
+      }
     }
   };
+
+  const displayError = (error) => {
+    if (error === 'DuplicateUserName') {
+      setPasswordError(true);
+      setPasswordErrorMessage('Tên tài khoản đã tồn tại!');
+    }
+    else if (error === 'PasswordTooShort') {
+      setPasswordError(true);
+      setPasswordErrorMessage('Mật khẩu quá ngắn!');
+    }
+    else if (error === 'PasswordRequresNonAlphanumeric') {
+      setPasswordError(true);
+      setPasswordErrorMessage('Mật khẩu thiếu ký tự đặc biệt!');
+    }
+    else if (error === 'PasswordRequiresLower') {
+      setPasswordError(true);
+      setPasswordErrorMessage('Mật khẩu phải gồm chữ thường!');
+    }
+    else if (error === 'PasswordRequiresUpper') {
+      setPasswordError(true);
+      setPasswordErrorMessage('Mật khẩu phải gồm chữ viết hoa!');
+    }
+    else if (error === 'PasswordRequiresDigit') {
+      setPasswordError(true);
+      setPasswordErrorMessage('Mật khẩu phải gồm số!');
+    }
+    else {
+      setPasswordError(true);
+      setPasswordErrorMessage("Đã có lỗi không xác định xảy ra!");
+    }
+  };
+
 
   const navigate = useNavigate();
   const handleSignInClick = () => {
