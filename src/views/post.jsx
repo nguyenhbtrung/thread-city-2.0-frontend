@@ -27,7 +27,7 @@ export default function Post() {
 
   return (
     <CenteredContainer>
-    <Card sx={{ maxWidth: 700 }}>
+    <Card sx={{ maxWidth: 700, backgroundColor: '#1c1c1c' }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -36,33 +36,41 @@ export default function Post() {
         }
         action={
           <IconButton aria-label="settings">
-            <MoreVertIcon />
+            <MoreVertIcon sx={{ color: 'white' }}/>
           </IconButton>
         }
-        title={<Typography align="left" fontWeight="bold">Mèo 123</Typography>}
-        subheader={<Typography align="left">14 tháng 9 2024</Typography>}
+        // Người dùng
+        title={<Typography align="left" fontWeight="bold" sx={{ color: 'white' }}>Mèo 123</Typography>}
+        // Thời gian đăng bài
+        subheader={<Typography align="left" sx={{ color: 'white' }}>14 tháng 9 2024</Typography>}
       />
-      <CardMedia
+      {/* <CardMedia
         component="img"
         height="auto"
         image="https://www.animalfriends.co.uk/siteassets/media/images/article-images/cat-articles/51_afi_article1_the-secret-language-of-cats.png"
         alt="Cat"
-      />
+      /> */}
+
       <CardContent>
-        <Typography align='left' variant="body2" sx={{ color: 'text.secondary' }}>
+        {/* Tiêu đề */}
+      <Typography align='left' fontWeight="bold" sx={{ color: 'text.secondary', color: 'white' }}>
+         Mèo
+        </Typography>
+        {/* Nội dung */}
+        <Typography align='left' variant="body2" sx={{ color: 'text.secondary', color: 'white' }}>
           Meow Meow Meow, Meow Meow Meow......... Meow Meow Meow. 
           Meow Meow Meow Meow, Meow Meow Meow~~ 
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
       <IconButton aria-label="like">
-          <ThumbUpIcon />
+          <ThumbUpIcon sx={{ color: 'white' }}/>
         </IconButton>
         <IconButton aria-label="comment">
-          <MessageIcon />
+          <MessageIcon sx={{ color: 'white' }}/>
         </IconButton>
         <IconButton aria-label="share">
-          <ShareIcon />
+          <ShareIcon sx={{ color: 'white' }}/>
         </IconButton>
       </CardActions>
     </Card>
