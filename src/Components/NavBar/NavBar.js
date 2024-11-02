@@ -16,6 +16,11 @@ const NavBar = () => {
 
   const drawerWidth = 200;
 
+  const handleSignOut = () => {
+    sessionStorage.removeItem('token');
+    navigate('/login');
+  };
+
   return (
     <div>
       <Drawer
@@ -35,14 +40,20 @@ const NavBar = () => {
         <Toolbar />
         <Divider />
         <List>
-          {mainNavItem.map((item, index) => (
+          {mainNavItem.map((item) => (
             <ListItem
               button
               key={item.id}
-              onClick={() => navigate(item.route)}>
+              onClick={() => {
+                if (item.label === 'Đăng xuất') {
+                  handleSignOut();
+                } else {
+                  navigate(item.route);
+                }
+              }}>
               <ListItemButton>
                 <ListItemIcon sx={{ color: '#FFFFFF' }}>
-                  {item.icon}
+                    {item.icon}
                 </ListItemIcon>
                 <ListItemText primary={item.label} />
               </ListItemButton>
