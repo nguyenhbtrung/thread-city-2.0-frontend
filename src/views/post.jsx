@@ -13,6 +13,7 @@ import MessageIcon from '@mui/icons-material/Message';
 import ShareIcon from '@mui/icons-material/Share';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { convertToCustomMonthDate } from '../AppConst';
 
 
 const CenteredContainer = styled('div')({
@@ -22,12 +23,19 @@ const CenteredContainer = styled('div')({
     height: '100vh', // Makes the container full height of the viewport
   });
 
-export default function Post() {
+export default function Post(props) {
+  let {
+    data
+} = props;
+
   const expanded = React.useState(false);
 
   return (
-    <CenteredContainer>
-    <Card sx={{ maxWidth: 700, backgroundColor: '#1c1c1c' }}>
+    <Card sx={{ 
+      maxWidth: { xs: '100%', sm: 600, md: 700 }, 
+      width: '100%', 
+      backgroundColor: '#1c1c1c' 
+    }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
@@ -40,9 +48,9 @@ export default function Post() {
           </IconButton>
         }
         // Người dùng
-        title={<Typography align="left" fontWeight="bold" sx={{ color: 'white' }}>Mèo 123</Typography>}
+        title={<Typography align="left" fontWeight="bold" sx={{ color: 'white' }}>{data?.author}</Typography>}
         // Thời gian đăng bài
-        subheader={<Typography align="left" sx={{ color: 'white' }}>14 tháng 9 2024</Typography>}
+        subheader={<Typography align="left" sx={{ color: 'white' }}>{convertToCustomMonthDate(data?.createdAt, 'vi-VN', 'long')}</Typography>}
       />
       {/* <CardMedia
         component="img"
@@ -54,12 +62,11 @@ export default function Post() {
       <CardContent>
         {/* Tiêu đề */}
       <Typography align='left' fontWeight="bold" sx={{ color: 'text.secondary', color: 'white' }}>
-         Mèo
+         {data?.title}
         </Typography>
         {/* Nội dung */}
         <Typography align='left' variant="body2" sx={{ color: 'text.secondary', color: 'white' }}>
-          Meow Meow Meow, Meow Meow Meow......... Meow Meow Meow. 
-          Meow Meow Meow Meow, Meow Meow Meow~~ 
+          {data?.content}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -74,6 +81,5 @@ export default function Post() {
         </IconButton>
       </CardActions>
     </Card>
-    </CenteredContainer>
   );
 }
