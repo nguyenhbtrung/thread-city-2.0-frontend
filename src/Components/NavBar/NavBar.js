@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -9,8 +9,19 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { mainNavItem } from './Consts/navList';
 import { useNavigate } from "react-router-dom";
+import CreatePostDialog from './Consts/CreatePostDialog';
 
 const NavBar = () => {
+  const [openCreatePost, setOpenCreatePost] = useState(false);
+
+  const handleClickOpenCreatePost = () => {
+    setOpenCreatePost(true);
+  };
+
+  const handleCloseCreatePost = () => {
+    setOpenCreatePost(false);
+  };
+
 
   const navigate = useNavigate();
 
@@ -20,6 +31,8 @@ const NavBar = () => {
     sessionStorage.removeItem('token');
     navigate('/sign-in');
   };
+
+  
 
   return (
     <div>
@@ -46,7 +59,9 @@ const NavBar = () => {
               key={item.id}
               onClick={() => {
                 if (item.label === 'Đăng xuất') {
-                  handleSignOut();
+                  handleSignOut(item.label === 'Đăng xuất');
+                } else if (item.label === 'Đăng bài') {
+                  handleClickOpenCreatePost();
                 } else {
                   navigate(item.route);
                 }
@@ -61,6 +76,7 @@ const NavBar = () => {
           ))}
         </List>
       </Drawer>
+      <CreatePostDialog open={openCreatePost} handleClose={handleCloseCreatePost}/>
     </div>
   )
 }

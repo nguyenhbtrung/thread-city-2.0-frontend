@@ -10,6 +10,7 @@ import Favorite from './views/favorite.js';
 import Profiles from './views/favorite.js';
 import Pin from './views/pin.js';
 import Menu from './views/menu.js';
+import PostForm from './views/PostForm.js';
 
 function App() {
 
@@ -26,7 +27,7 @@ function App() {
           <Route path="/T1" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/post" element={<Post />} />
+          <Route path="/post" element={<PostForm />} />
           <Route path="/favorite" element={<Favorite />} />
           <Route path="/profiles" element={<Profiles />} />
           <Route path="/pin" element={<Pin />} />
