@@ -69,43 +69,6 @@ export default function SignUp(props) {
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
-  // const validateInputs = () => {
-  //   const email = document.getElementById('email');
-  //   const password = document.getElementById('password');
-  //   const name = document.getElementById('name');
-
-  //   let isValid = true;
-
-  //   if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-  //     setEmailError(true);
-  //     setEmailErrorMessage('Hãy nhập email hợp lệ.');
-  //     isValid = false;
-  //   } else {
-  //     setEmailError(false);
-  //     setEmailErrorMessage('');
-  //   }
-
-  //   if (!password.value || password.value.length < 6) {
-  //     setPasswordError(true);
-  //     setPasswordErrorMessage('Mật khẩu không hợp lệ.');
-  //     isValid = false;
-  //   } else {
-  //     setPasswordError(false);
-  //     setPasswordErrorMessage('');
-  //   }
-
-  //   if (!name.value || name.value.length < 1) {
-  //     setNameError(true);
-  //     setNameErrorMessage('Hãy nhập tên hợp lệ.');
-  //     isValid = false;
-  //   } else {
-  //     setNameError(false);
-  //     setNameErrorMessage('');
-  //   }
-
-  //   return isValid;
-  // };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -125,6 +88,7 @@ export default function SignUp(props) {
       }
       else if (error.response.status === 500) {
         const errors = error.response.data;
+        setPasswordError(true);
         displayError(errors[0].code);
         console.log(error.response.data);
       }
@@ -133,31 +97,27 @@ export default function SignUp(props) {
 
   const displayError = (error) => {
     if (error === 'DuplicateUserName') {
-      setPasswordError(true);
       setPasswordErrorMessage('Tên tài khoản đã tồn tại!');
     }
+    else if (error === 'InvalidUserName') {
+      setPasswordErrorMessage('Tên tài khoản không hợp lệ!');
+    }
     else if (error === 'PasswordTooShort') {
-      setPasswordError(true);
       setPasswordErrorMessage('Mật khẩu quá ngắn!');
     }
     else if (error === 'PasswordRequiresNonAlphanumeric') {
-      setPasswordError(true);
       setPasswordErrorMessage('Mật khẩu thiếu ký tự đặc biệt!');
     }
     else if (error === 'PasswordRequiresLower') {
-      setPasswordError(true);
       setPasswordErrorMessage('Mật khẩu phải gồm chữ thường!');
     }
     else if (error === 'PasswordRequiresUpper') {
-      setPasswordError(true);
       setPasswordErrorMessage('Mật khẩu phải gồm chữ viết hoa!');
     }
     else if (error === 'PasswordRequiresDigit') {
-      setPasswordError(true);
       setPasswordErrorMessage('Mật khẩu phải gồm số!');
     }
     else {
-      setPasswordError(true);
       setPasswordErrorMessage("Đã có lỗi không xác định xảy ra!");
     }
   };

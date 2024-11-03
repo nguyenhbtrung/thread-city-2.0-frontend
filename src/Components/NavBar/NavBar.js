@@ -18,7 +18,7 @@ const NavBar = () => {
 
   const handleSignOut = () => {
     sessionStorage.removeItem('token');
-    navigate('/login');
+    navigate('/sign-in');
   };
 
   return (
@@ -53,7 +53,7 @@ const NavBar = () => {
               }}>
               <ListItemButton>
                 <ListItemIcon sx={{ color: '#FFFFFF' }}>
-                    {item.icon}
+                  {item.icon}
                 </ListItemIcon>
                 <ListItemText primary={item.label} />
               </ListItemButton>
