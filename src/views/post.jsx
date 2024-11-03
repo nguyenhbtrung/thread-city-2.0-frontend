@@ -17,34 +17,35 @@ import { convertToCustomMonthDate } from '../AppConst';
 
 
 const CenteredContainer = styled('div')({
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh', // Makes the container full height of the viewport
-  });
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100vh', // Makes the container full height of the viewport
+});
 
 export default function Post(props) {
   let {
     data
-} = props;
+  } = props;
 
   const expanded = React.useState(false);
 
   return (
-    <Card sx={{ 
-      maxWidth: { xs: '100%', sm: 600, md: 700 }, 
-      width: '100%', 
-      backgroundColor: '#1c1c1c' 
+    <Card sx={{
+      maxWidth: { xs: '100%', sm: 600, md: 700 },
+      width: '100%',
+      backgroundColor: '#1c1c1c'
     }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            C
+          <Avatar
+            aria-label="recipe"
+            src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fuser%2F&psig=AOvVaw1bscKecF5yVYUxbAeH0cF8&ust=1730718872225000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCLDAnq6EwIkDFQAAAAAdAAAAABAE">
           </Avatar>
         }
         action={
           <IconButton aria-label="settings">
-            <MoreVertIcon sx={{ color: 'white' }}/>
+            <MoreVertIcon sx={{ color: 'white' }} />
           </IconButton>
         }
         // Người dùng
@@ -61,8 +62,8 @@ export default function Post(props) {
 
       <CardContent>
         {/* Tiêu đề */}
-      <Typography align='left' fontWeight="bold" sx={{ color: 'text.secondary', color: 'white' }}>
-         {data?.title}
+        <Typography align='left' fontWeight="bold" sx={{ color: 'text.secondary', color: 'white' }}>
+          {data?.title}
         </Typography>
         {/* Nội dung */}
         <Typography align='left' variant="body2" sx={{ color: 'text.secondary', color: 'white' }}>
@@ -70,14 +71,14 @@ export default function Post(props) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-      <IconButton aria-label="like">
-          <ThumbUpIcon sx={{ color: 'white' }}/>
+        <IconButton aria-label="like">
+          <ThumbUpIcon sx={{ color: 'white' }} />
         </IconButton>
         <IconButton aria-label="comment">
-          <MessageIcon sx={{ color: 'white' }}/>
+          <MessageIcon sx={{ color: 'white' }} />
         </IconButton>
         <IconButton aria-label="share">
-          <ShareIcon sx={{ color: 'white' }}/>
+          <ShareIcon sx={{ color: 'white' }} />
         </IconButton>
       </CardActions>
     </Card>

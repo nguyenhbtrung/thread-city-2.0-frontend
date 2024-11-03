@@ -10,55 +10,49 @@ import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward'; //Log
 
 export const mainNavItem = [
     {
-        id: 0, //Logo tạm thời
-        icon: <AccessibleForwardIcon />,
-        label: 'Thread T1',
-        route: 'home'
-    },
-    {
-        id: 1,
+        id: 0,
         icon: <HomeIcon />,
         label: 'Trang chủ',
         route: 'home'
     },
     {
-        id: 2,
+        id: 1,
         icon: <SearchIcon />,
         label: 'Tìm kiếm',
         route: 'search'
     },
     {
-        id: 3,
+        id: 2,
         icon: <AddIcon />,
         label: 'Đăng bài',
         route: 'post'
     },
     {
-        id: 4,
+        id: 3,
         icon: <FavoriteBorderIcon />,
         label: 'Yêu thích',
         route: 'favorite'
     },
     {
-        id: 5,
+        id: 4,
         icon: <PermIdentityIcon />,
         label: 'Cá nhân',
         route: 'profiles'
     },
     {
-        id: 6,
+        id: 5,
         icon: <PushPinIcon />,
         label: 'Lưu trữ',
         route: 'pin'
     },
     {
-        id: 7,
+        id: 6,
         icon: <MenuIcon />,
         label: 'Cài đặt',
         route: 'menu'
     },
     {
-        id: 8,
+        id: 7,
         icon: <LogoutIcon />,
         label: 'Đăng xuất',
         route: 'sign-in'
