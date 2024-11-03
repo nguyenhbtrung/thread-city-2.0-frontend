@@ -19,6 +19,9 @@ import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import FormHelperText from '@mui/material/FormHelperText';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import {Visibility, VisibilityOff} from '@mui/icons-material';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -69,6 +72,7 @@ export default function SignIn(props) {
 
   const [userName, setUserName] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const handleUserNameChange = (event) => {
     setUserName(event.target.value);
@@ -76,6 +80,10 @@ export default function SignIn(props) {
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+  };
+
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleClickOpen = () => {
@@ -195,7 +203,7 @@ export default function SignIn(props) {
               <TextField
                 name="password"
                 placeholder="Điền mật khẩu của bạn"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="password"
                 autoComplete="current-password"
                 autoFocus
@@ -209,6 +217,19 @@ export default function SignIn(props) {
                     fontFamily: 'Roboto, sans-serif',
                     fontSize: '16px',
                   },
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleTogglePasswordVisibility}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
                 }}
               />
               {/* Show error message if password is invalid */}
