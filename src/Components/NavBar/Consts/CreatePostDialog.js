@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import {
-    TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, useTheme
+    TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, useTheme,
+    CircularProgress
 } from '@mui/material';
-import AppTheme from '../../../views/shared-theme/AppTheme';
 import { colorSchemes } from '../../../views/shared-theme/themePrimitives';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setNewPost } from '../../../Redux/postsSlice';
 
 const CreatePostDialog = (props) => {
     let {
@@ -15,37 +18,61 @@ const CreatePostDialog = (props) => {
     const theme = useTheme();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setLoading(true);  // Set loading to true when submitting
         CreatePost();
-        handleClose();
     };
 
     const CreatePost = async () => {
+        const token = sessionStorage.getItem('token');
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        };
         try {
-            const token = sessionStorage.getItem('token');
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            };
             const response = await axios.post('https://localhost:7135/api/Post', {
                 title: title,
                 content: content,
             }, config);
 
             if (response.status === 200) {
+                console.log("New post:", response.data);
                 toast.success('Đăng bài thành công');
             }
-            const res = await axios.put('https://localhost:7135/api/Post/update-posts-scores', config);
+            dispatch(setNewPost(response.data));
+            navigate("/home");
+            handleClose();
         } catch (error) {
-            toast.error('Có lỗi xảy ra');
-            console.log(error);
+            if (error.code === "ERR_BAD_REQUEST") {
+                if (error?.response?.data?.errors?.Title != null) {
+                    toast.error(error?.response?.data?.errors?.Title[0]);
+                }
+                if (error?.response?.data?.errors?.Content != null) {
+                    toast.error(error?.response?.data?.errors?.Content[0]);
+                }
+            } else {
+                toast.error('Có lỗi xảy ra');
+                console.log(error);
+                handleClose();
+            }
+        } finally {
+            setLoading(false);
         }
 
-
+        try {
+            const res = await axios.put('https://localhost:7135/api/Post/update-posts-scores', {}, config);
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -112,8 +139,14 @@ const CreatePostDialog = (props) => {
                 <Button onClick={handleClose} color="primary">
                     Hủy
                 </Button>
-                <Button onClick={handleSubmit} variant="contained" color="primary">
-                    Đăng
+                <Button
+                    onClick={handleSubmit}
+                    variant="contained"
+                    color="primary"
+                    disabled={loading}  // Disable button when loading
+                // startIcon={loading && <CircularProgress size={24} />}  // Show loading spinner
+                >
+                    {loading ? <CircularProgress size={24} /> : 'Đăng'}
                 </Button>
             </DialogActions>
         </Dialog>

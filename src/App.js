@@ -11,29 +11,36 @@ import Profiles from './views/favorite.js';
 import Pin from './views/pin.js';
 import Menu from './views/menu.js';
 import PostForm from './views/PostForm.js';
+import store from './Redux/store.js';
+import { Provider } from 'react-redux';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
   return (
     <div className="App">
-      <Router>
-        <div>
-          <ConditionalNavBar />
-        </div>
-        <Routes>
-          <Route path="/" element={<SignUp />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/T1" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/post" element={<PostForm />} />
-          <Route path="/favorite" element={<Favorite />} />
-          <Route path="/profiles" element={<Profiles />} />
-          <Route path="/pin" element={<Pin />} />
-          <Route path="/menu" element={<Menu />} />
-        </Routes>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <div>
+            <ConditionalNavBar />
+          </div>
+          <Routes>
+            <Route path="/" element={<SignUp />} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/T1" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/search" element={<Search />} />
+            <Route path="/post" element={<PostForm />} />
+            <Route path="/favorite" element={<Favorite />} />
+            <Route path="/profiles" element={<Profiles />} />
+            <Route path="/pin" element={<Pin />} />
+            <Route path="/menu" element={<Menu />} />
+          </Routes>
+        </Router>
+        <ToastContainer autoClose={2000} />
+      </Provider>
     </div>
   );
 }
