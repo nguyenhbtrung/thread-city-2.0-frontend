@@ -7,7 +7,7 @@ import Home from './views/home.js';
 import Search from './views/search.js';
 import Post from './views/post.jsx';
 import Favorite from './views/favorite.js';
-import Profiles from './views/favorite.js';
+import Profiles from './views/profiles.js';
 import Pin from './views/pin.js';
 import Menu from './views/menu.js';
 import PostForm from './views/PostForm.js';
