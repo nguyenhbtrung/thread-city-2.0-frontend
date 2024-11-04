@@ -14,8 +14,9 @@ const SearchField = (props) => {
     const handleSearch = async () => {
         try {
             console.log(searchTerm);
-            const response = await axios.get(`https://localhost:7135/api/Post/search/${searchTerm}`);
+            const response = await axios.get(`https://localhost:7135/api/Post/search?SearchTerm=${searchTerm}`);
             const data = response.data;
+            console.log(data);
             props.setSearchResult(data);
         }
         catch (err) {
