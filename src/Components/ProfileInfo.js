@@ -13,7 +13,7 @@ const ProfileInfo = (props) => {
         return `${day}/${month}/${year}`;
     };
     return (
-        <Box component="section" sx={{ p: 2, border: '1px solid white', width: { xs: '100%', sm: '75%', md: '50%' } }}>
+        <Box component="section" sx={{ p: 2, borderRadius: '15px', backgroundColor: '#1c1c1c', width: { xs: '90%', sm: '70%', md: '50%' }, maxWidth: '700px' }}>
             <img
                 width='100%'
                 height='auto'
@@ -28,8 +28,8 @@ const ProfileInfo = (props) => {
             <h2 style={{ textAlign: 'left', marginBottom: '5px' }}>{userName}</h2>
             <h3 style={{ textAlign: 'left', fontSize: '12px', color: 'gray' }}>{email}</h3>
             <h3 style={{ textAlign: 'left', fontSize: '12px', color: 'gray' }}>Gia nhập ngày: {formatDate(createdAt)}</h3>
-            <div style={{ display: 'flex',  marginTop: '10px', fontSize: '14px' }}>
-                <h2 style={{ textAlign: 'left', marginBottom: '5px', marginRight:'20px' }}>0 người theo dõi</h2>
+            <div style={{ display: 'flex', marginTop: '10px', fontSize: '14px' }}>
+                <h2 style={{ textAlign: 'left', marginBottom: '5px', marginRight: '20px' }}>0 người theo dõi</h2>
                 <h2 style={{ textAlign: 'left', marginBottom: '5px' }}>0 người đang theo dõi</h2>
             </div>
         </Box>
