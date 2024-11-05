@@ -108,6 +108,7 @@ export default function SignIn(props) {
       });
       console.log('Đăng nhập thành công: ', response.data);
       const token = response.data.token;
+      sessionStorage.setItem('userName', userName);
       sessionStorage.setItem('token', token);
       navigate('/home');
     }

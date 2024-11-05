@@ -16,7 +16,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
 function App() {
-
   return (
     <div className="App">
       <Provider store={store}>
@@ -32,7 +31,7 @@ function App() {
             <Route path="/search" element={<Search />} />
             <Route path="/post" element={<PostForm />} />
             <Route path="/favorite" element={<Favorite />} />
-            <Route path="/profiles" element={<Profiles />} />
+            <Route path="/profile/by-username/:userName" element={<Profiles/>} />
             <Route path="/pin" element={<Pin />} />
             <Route path="/menu" element={<Menu />} />
           </Routes>

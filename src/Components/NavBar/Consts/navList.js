@@ -7,7 +7,7 @@ import PushPinIcon from '@mui/icons-material/PushPin';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-export const mainNavItem = [
+export const getNavItems = (token) => [
     {
         id: 0,
         icon: <HomeIcon />,
@@ -36,7 +36,7 @@ export const mainNavItem = [
         id: 4,
         icon: <PermIdentityIcon />,
         label: 'Cá nhân',
-        route: 'profiles'
+        route: token ? `profile/by-username/${sessionStorage.getItem('userName')}` : 'sign-in'
     },
     {
         id: 5,
@@ -53,7 +53,7 @@ export const mainNavItem = [
     {
         id: 7,
         icon: <LogoutIcon />,
-        label: sessionStorage.getItem('token') ? 'Đăng xuất' : 'Đăng nhập',
+        label: token ? 'Đăng xuất' : 'Đăng nhập',
         route: 'sign-in'
     },
-]
+];

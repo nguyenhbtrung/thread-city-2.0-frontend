@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -6,12 +6,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { mainNavItem } from './Consts/navList';
+import { getNavItems } from './Consts/navList';
 import { useNavigate } from "react-router-dom";
 import CreatePostDialog from './Consts/CreatePostDialog';
 
 const NavBar = () => {
   const [openCreatePost, setOpenCreatePost] = useState(false);
+  const [token, setToken] = useState(sessionStorage.getItem('token'));
 
   const handleClickOpenCreatePost = () => {
     setOpenCreatePost(true);
@@ -21,17 +22,31 @@ const NavBar = () => {
     setOpenCreatePost(false);
   };
 
-
   const navigate = useNavigate();
 
   const drawerWidth = 200;
 
   const handleSignOut = () => {
     sessionStorage.removeItem('token');
+    setToken(null); // Update the token state
     navigate('/sign-in');
   };
 
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setToken(sessionStorage.getItem('token'));
+    };
 
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    // This effect will run whenever the token state changes
+  }, [token]);
 
   return (
     <div>
@@ -51,14 +66,14 @@ const NavBar = () => {
       >
         <Divider />
         <List sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-          {mainNavItem.map((item) => (
+          {getNavItems(token).map((item) => (
             <ListItem
               button
               key={item.id}
               sx={{ paddingRight: '0px' }}
               onClick={() => {
                 if (item.label === 'Đăng xuất') {
-                  handleSignOut(item.label === 'Đăng xuất');
+                  handleSignOut();
                 } else if (item.label === 'Đăng bài') {
                   handleClickOpenCreatePost();
                 } else {
@@ -79,6 +94,5 @@ const NavBar = () => {
     </div>
   )
 }
-
 
 export default NavBar;
