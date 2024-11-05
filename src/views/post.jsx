@@ -18,6 +18,7 @@ import axios from 'axios';
 import { Box, Button, Divider, TextField } from '@mui/material';
 import ReplyIcon from '@mui/icons-material/Reply';
 import SendIcon from '@mui/icons-material/Send';
+import { useNavigate } from 'react-router-dom';
 
 
 const CenteredContainer = styled('div')({
@@ -39,6 +40,8 @@ export default function Post(props) {
   const [comments, setComments] = React.useState([]);
   const [newComment, setNewComment] = React.useState("");
   const [newCommentList, setNewCommentList] = React.useState([]);
+
+  const navigate = useNavigate();
 
   const toggleCommentsVisibility = async () => {
     setCommentsVisible(!commentsVisible);
@@ -112,6 +115,10 @@ export default function Post(props) {
     }
   };
 
+  const handleClickNavigateToAuthor = () => {
+    navigate(`/profile/by-username/${data?.author}`);
+  }
+
   return (
     <Card sx={{
       maxWidth: { xs: '100%', sm: 600, md: 700 },
@@ -121,6 +128,7 @@ export default function Post(props) {
       <CardHeader
         avatar={
           <Avatar
+            onClick={handleClickNavigateToAuthor}
             aria-label="recipe"
             src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fpixabay.com%2Fimages%2Fsearch%2Fuser%2F&psig=AOvVaw1bscKecF5yVYUxbAeH0cF8&ust=1730718872225000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCLDAnq6EwIkDFQAAAAAdAAAAABAE">
           </Avatar>
@@ -131,7 +139,7 @@ export default function Post(props) {
           </IconButton>
         }
         // Người dùng
-        title={<Typography align="left" fontWeight="bold" sx={{ color: 'white' }}>{data?.author}</Typography>}
+        title={<Typography onClick={handleClickNavigateToAuthor} align="left" fontWeight="bold" sx={{ color: 'white' }}>{data?.author}</Typography>}
         // Thời gian đăng bài
         subheader={<Typography align="left" sx={{ color: 'white' }}>{convertToCustomMonthDate(data?.createdAt, 'vi-VN', 'long')}</Typography>}
       />
