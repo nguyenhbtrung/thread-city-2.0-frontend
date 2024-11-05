@@ -23,7 +23,7 @@ const ProfileInfo = (props) => {
             <Avatar
                 sx={{ bgcolor: 'gray', width: 100, height: 100, left: 20, }}
                 aria-label="recipe"
-                src={avatarImgId ? `https://localhost:7135/api/User/avatar/${avatarImgId}` : ''}
+                src={avatarImgId ? `https://localhost:7135/api/User/avatar/${avatarImgId}` : 'https://1.bp.blogspot.com/-R8gnX_mf-hI/XZwpsZoVyNI/AAAAAAAADOc/zfTGRKC1VyUVP2hxELrNk04TJTrHDg0mQCLcBGAsYHQ/s0/72487982_2513824035518413_4387733843654737920_n.png'}
             />
             <h2 style={{ textAlign: 'left', marginBottom: '5px' }}>{userName}</h2>
             <h3 style={{ textAlign: 'left', fontSize: '12px', color: 'gray' }}>{email}</h3>
