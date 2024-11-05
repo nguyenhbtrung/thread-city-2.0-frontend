@@ -71,12 +71,14 @@ const Home = () => {
                         <Box sx={{ width: { xs: '100%', sm: 700 }, mb: 2 }}>
                             <Post
                                 data={{
+                                    postId: item?.postId,
                                     author: item?.authorUserName,
                                     title: item?.title,
                                     content: item?.content,
                                     createdAt: item?.createdAt,
                                     likeCount: item?.likeCount,
-                                    commentCount: item?.commentCount
+                                    commentCount: item?.commentCount,
+                                    isLiked: item?.isLiked
                                 }}
                             />
                         </Box>
