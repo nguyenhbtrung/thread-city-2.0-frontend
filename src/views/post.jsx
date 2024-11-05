@@ -73,9 +73,15 @@ export default function Post(props) {
       <CardActions disableSpacing>
         <IconButton aria-label="like">
           <ThumbUpIcon sx={{ color: 'white' }} />
+          <Typography variant="body2" sx={{ color: 'white', marginLeft: '4px' }}>
+            {data?.likeCount}
+          </Typography>
         </IconButton>
         <IconButton aria-label="comment">
           <MessageIcon sx={{ color: 'white' }} />
+          <Typography variant="body2" sx={{ color: 'white', marginLeft: '4px' }}>
+            {data?.commentCount}
+          </Typography>
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon sx={{ color: 'white' }} />
