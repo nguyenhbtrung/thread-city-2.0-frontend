@@ -15,7 +15,6 @@ const Profiles = () => {
 
     useEffect(() => {
         console.log(userName);
-        
         const getProfileData = async () => {
             try {
                 if (userName === null) {    
@@ -36,7 +35,7 @@ const Profiles = () => {
             }
         };
         getProfileData();
-    });
+    }, [userName]);
     return (
         <div style={{ marginTop: '20px' }}>
             <div style={{ margin: 0, display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
