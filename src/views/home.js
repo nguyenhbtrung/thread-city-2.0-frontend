@@ -3,12 +3,18 @@ import Post from "./post";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Grid from '@mui/material/Grid';
-import { Box } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setNewPost, setNewsfeed } from "../Redux/postsSlice";
+import PostList from "../Components/PostList";
 
 const Home = () => {
     const [state, setState] = useState({});
+
+    const [page, setPage] = useState(1);
+    const [loadingPost, setLoadingPost] = useState(true);
+
+
 
     const setDataState = (value, source) => {
         setState((pre) => ({ ...pre, [source]: value }))
@@ -28,7 +34,7 @@ const Home = () => {
             }
         };
         try {
-            const response = await axios.get('https://localhost:7135/api/Post/newsfeed', config);
+            const response = await axios.get(`https://localhost:7135/api/Post/newsfeed?PageNumber=${page}`, config);
             dispatch(setNewsfeed(response?.data));
             setDataState(response?.data, 'posts');
             console.log('state.posts', state?.posts);
@@ -37,6 +43,21 @@ const Home = () => {
             toast.error("Có lỗi xảy ra");
         }
     };
+
+    const handleScroll = () => {
+        const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+
+        if (scrollTop + clientHeight >= scrollHeight) {
+            setPage(prev => prev + 1);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
     useEffect(() => {
 
 
@@ -52,6 +73,32 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
+        if (page > 1) {
+            LoadMorePost();
+        }
+    }, [page]);
+
+    const LoadMorePost = async () => {
+        const token = sessionStorage.getItem('token');
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        };
+        try {
+            const response = await axios.get(`https://localhost:7135/api/Post/newsfeed?PageNumber=${page}`, config);
+            const newList = [...posts, ...response?.data]
+            dispatch(setNewsfeed(newList));
+            setDataState(newList, 'posts');
+            console.log('state.posts', state?.posts);
+            console.log('posts', posts);
+        } catch (error) {
+            toast.error("Có lỗi xảy ra");
+        }
+    };
+
+    useEffect(() => {
         // posts = posts || []
         if (newPost == null)
             return;
@@ -64,29 +111,11 @@ const Home = () => {
     // useEffect(() => console.log('state.posts', state?.posts), [state?.posts]);
 
     return (
-        <Grid container direction="column" alignItems="center" spacing={2}>
-            {posts?.map((item, index) => {
-                return (
-                    <Grid item key={index}>
-                        <Box sx={{ width: { xs: '100%', sm: 700 }, mb: 2 }}>
-                            <Post
-                                data={{
-                                    postId: item?.postId,
-                                    author: item?.authorUserName,
-                                    title: item?.title,
-                                    content: item?.content,
-                                    createdAt: item?.createdAt,
-                                    likeCount: item?.likeCount,
-                                    commentCount: item?.commentCount,
-                                    isLiked: item?.isLiked
-                                }}
-                            />
-                        </Box>
-                    </Grid>
-                );
-            })}
-        </Grid>
+        <PostList
+            posts={posts}
+            loading={loadingPost}
+        />
     )
 }
 
-export default Home
+export default Home;
