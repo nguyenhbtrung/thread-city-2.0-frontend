@@ -17,7 +17,7 @@ const ProfileInfo = (props) => {
             <img
                 width='100%'
                 height='auto'
-                src={coverImgId ? `` : `https://iconerecife.com.br/wp-content/plugins/uix-page-builder/uixpb_templates/images/UixPageBuilderTmpl/default-cover-4.jpg`}
+                src={coverImgId ? `` : `https://cdn.oneesports.vn/cdn-data/sites/4/2024/11/lmht-esports-riot-games-cktg-2024-t1-vo-dich.jpg`}
                 style={{ maxHeight: '200px', objectFit: 'cover', marginBottom: '-50px' }}
             />
             <Avatar
