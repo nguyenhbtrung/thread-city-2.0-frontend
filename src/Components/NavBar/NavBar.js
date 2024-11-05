@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Drawer from '@mui/material/Drawer';
-import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -32,7 +31,7 @@ const NavBar = () => {
     navigate('/sign-in');
   };
 
-  
+
 
   return (
     <div>
@@ -50,13 +49,13 @@ const NavBar = () => {
         variant="permanent"
         anchor="left"
       >
-        <Toolbar />
         <Divider />
-        <List>
+        <List sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
           {mainNavItem.map((item) => (
             <ListItem
               button
               key={item.id}
+              sx={{ paddingRight: '0px' }}
               onClick={() => {
                 if (item.label === 'Đăng xuất') {
                   handleSignOut(item.label === 'Đăng xuất');
@@ -76,7 +75,7 @@ const NavBar = () => {
           ))}
         </List>
       </Drawer>
-      <CreatePostDialog open={openCreatePost} handleClose={handleCloseCreatePost}/>
+      <CreatePostDialog open={openCreatePost} handleClose={handleCloseCreatePost} />
     </div>
   )
 }

@@ -6,7 +6,6 @@ import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import PushPinIcon from '@mui/icons-material/PushPin';
 import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
-import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward'; //Logo tạm thời
 
 export const mainNavItem = [
     {
@@ -54,7 +53,7 @@ export const mainNavItem = [
     {
         id: 7,
         icon: <LogoutIcon />,
-        label: 'Đăng xuất',
+        label: sessionStorage.getItem('token') ? 'Đăng xuất' : 'Đăng nhập',
         route: 'sign-in'
     },
 ]

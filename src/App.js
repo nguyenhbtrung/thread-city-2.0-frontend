@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import NavBar from './Components/NavBar/NavBar.js';
 import Home from './views/home.js';
 import Search from './views/search.js';
-import Post from './views/post.jsx';
 import Favorite from './views/favorite.js';
 import Profiles from './views/profiles.js';
 import Pin from './views/pin.js';
@@ -26,10 +25,9 @@ function App() {
             <ConditionalNavBar />
           </div>
           <Routes>
-            <Route path="/" element={<SignUp />} />
+            <Route path="/" element={<Home />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/sign-in" element={<SignIn />} />
-            <Route path="/T1" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/search" element={<Search />} />
             <Route path="/post" element={<PostForm />} />
@@ -49,7 +47,7 @@ const ConditionalNavBar = () => {
   const location = useLocation();
 
   // Ẩn thanh NavBar ở trang đăng kí/ đăng nhập
-  const hideNavBarPaths = ['/sign-in', '/sign-up', '/'];
+  const hideNavBarPaths = ['/sign-in', '/sign-up'];
 
   return !hideNavBarPaths.includes(location.pathname) ? <NavBar /> : null;
 };
