@@ -1,6 +1,6 @@
 import React from "react";
 import ProfileInfo from "../Components/ProfileInfo.js";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 import Grid from '@mui/material/Grid';
@@ -42,8 +42,8 @@ const Profiles = () => {
         getProfileData();
     }, [sessionStorage.getItem('token')]);
     return (
-        <div style={{ marginTop: '20px'}}>
-            <div style={{ margin: 0, display: 'flex', justifyContent: 'center', marginBottom:'20px' }}>
+        <div style={{ marginTop: '20px' }}>
+            <div style={{ margin: 0, display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
                 {profileData && <ProfileInfo{...profileData} />}
             </div>
             <Grid container direction="column" alignItems="center" spacing={2}>
@@ -56,7 +56,9 @@ const Profiles = () => {
                                         author: item?.authorUserName,
                                         title: item?.title,
                                         content: item?.content,
-                                        createdAt: item?.createdAt
+                                        createdAt: item?.createdAt,
+                                        likeCount: item?.likeCount,
+                                        commentCount: item?.commentCount
                                     }}
                                 />
                             </Box>

@@ -74,7 +74,9 @@ const Home = () => {
                                     author: item?.authorUserName,
                                     title: item?.title,
                                     content: item?.content,
-                                    createdAt: item?.createdAt
+                                    createdAt: item?.createdAt,
+                                    likeCount: item?.likeCount,
+                                    commentCount: item?.commentCount
                                 }}
                             />
                         </Box>
