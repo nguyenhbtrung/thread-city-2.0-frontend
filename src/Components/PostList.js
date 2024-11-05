@@ -6,7 +6,8 @@ import Post from '../views/post';
 const PostList = (props) => {
     let {
         posts,
-        loading
+        loading,
+        onDeletedSuccessfully
     } = props;
     return (
         <Grid container direction="column" alignItems="center" spacing={2}>
@@ -25,6 +26,7 @@ const PostList = (props) => {
                                     commentCount: item?.commentCount,
                                     isLiked: item?.isLiked
                                 }}
+                                onDeletedSuccessfully={onDeletedSuccessfully}
                             />
                         </Box>
                     </Grid>

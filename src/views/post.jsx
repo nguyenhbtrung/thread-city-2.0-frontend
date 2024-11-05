@@ -22,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const CenteredContainer = styled('div')({
   display: 'flex',
@@ -32,7 +33,8 @@ const CenteredContainer = styled('div')({
 
 export default function Post(props) {
   let {
-    data
+    data,
+    onDeletedSuccessfully
   } = props;
 
   const expanded = useState(false);
@@ -47,12 +49,12 @@ export default function Post(props) {
   const open = Boolean(anchorEl);
 
   const handleMenuOpen = (event) => {
-    if (sessionStorage.getItem('userName') !== data?.author){
+    if (sessionStorage.getItem('userName') !== data?.author) {
       console.log(sessionStorage.getItem('userName'));
       console.log(data?.author);
       return;
     }
-      
+
     setAnchorEl(event.currentTarget);
   };
 
@@ -60,8 +62,24 @@ export default function Post(props) {
     setAnchorEl(null);
   };
 
-  const handleDeletePost = () => {
-    // Add your delete post logic here
+  const handleDeletePost = async () => {
+    const token = sessionStorage.getItem('token');
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    };
+    try {
+      const response = await axios.delete(`https://localhost:7135/api/Post/${data?.postId}`, config);
+      if (response?.status === 200) {
+        toast.success("Đã xoá bài viết");
+        onDeletedSuccessfully();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Có lỗi xảy ra");
+    }
     console.log('Delete post');
     handleMenuClose();
   };
@@ -143,6 +161,15 @@ export default function Post(props) {
   const handleClickNavigateToAuthor = () => {
     navigate(`/profile/by-username/${data?.author}`);
   }
+
+  React.useEffect(() => {
+    SetLikeCount(data?.likeCount || 0);
+    SetLike(data?.isLiked || false);
+    setCommentsVisible(false);
+    setComments([]);
+    setNewComment("");
+    setNewCommentList([]);
+  }, [data]);
 
   return (
     <Card sx={{

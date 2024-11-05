@@ -19,27 +19,28 @@ const Profiles = () => {
 
     useEffect(() => {
         console.log(userName);
-        const getProfileData = async () => {
-            try {
-                if (userName === null) {
-                    console.log('userName is null');
-                    navigate('/home');
-                } else {
-                    const response = await axios.get(`https://localhost:7135/api/User/profile/by-username/${userName}`);
-                    const post = await axios.get(`https://localhost:7135/api/User/profile/by-username/${userName}/posts`);
-                    if (response.status === 200 && post.status === 200) {
-                        setProfileData(response.data);
-                        setPosts(post.data);
-                        console.log(response.data);
-                        console.log(post.data);
-                    }
-                }
-            } catch (err) {
-                console.log(err);
-            }
-        };
         getProfileData();
     }, [userName]);
+
+    const getProfileData = async () => {
+        try {
+            if (userName === null) {
+                console.log('userName is null');
+                navigate('/home');
+            } else {
+                const response = await axios.get(`https://localhost:7135/api/User/profile/by-username/${userName}`);
+                const post = await axios.get(`https://localhost:7135/api/User/profile/by-username/${userName}/posts`);
+                if (response.status === 200 && post.status === 200) {
+                    setProfileData(response.data);
+                    setPosts(post.data);
+                    console.log(response.data);
+                    console.log(post.data);
+                }
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     const handleScroll = () => {
         const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
@@ -72,6 +73,12 @@ const Profiles = () => {
         }
     };
 
+    const ResetPosts = () => {
+        setPage(1);
+        setPosts([]);
+        getProfileData();
+    }
+
     return (
         <div style={{ marginTop: '20px' }}>
             <div style={{ margin: 0, display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
@@ -80,6 +87,7 @@ const Profiles = () => {
             <PostList
                 posts={posts}
                 loading={loadingPost}
+                onDeletedSuccessfully={ResetPosts}
             />
         </div>
     )

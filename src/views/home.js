@@ -107,6 +107,11 @@ const Home = () => {
         dispatch(setNewPost(null));
     }, [newPost]);
 
+    const ResetPage = () => {
+        setPage(1);
+        dispatch(setNewsfeed([]));
+        fetchData();
+    };
     // useEffect(() => console.log('posts', post?.posts), [post?.posts]);
     // useEffect(() => console.log('state.posts', state?.posts), [state?.posts]);
 
@@ -114,6 +119,7 @@ const Home = () => {
         <PostList
             posts={posts}
             loading={loadingPost}
+            onDeletedSuccessfully={ResetPage}
         />
     )
 }
