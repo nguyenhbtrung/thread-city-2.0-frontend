@@ -36,15 +36,50 @@ export default function Post(props) {
   const [likeCount, SetLikeCount] = React.useState(data?.likeCount || 0);
   const [like, SetLike] = React.useState(data?.isLiked || false);
   const [commentsVisible, setCommentsVisible] = React.useState(false);
-  const [comments, SetComments] = React.useState([]);
+  const [comments, setComments] = React.useState([]);
+  const [newComment, setNewComment] = React.useState("");
+  const [newCommentList, setNewCommentList] = React.useState([]);
 
   const toggleCommentsVisibility = async () => {
     setCommentsVisible(!commentsVisible);
     if (comments.length == 0) {
       const commentPage = await GetCommentPage(1);
-      SetComments(commentPage);
+      setComments(commentPage);
     }
   };
+
+  const handleCommentChange = (event) => {
+    setNewComment(event.target.value);
+  };
+
+  const submitComment = () => {
+    handleAddComment(newComment);
+    setNewComment('');
+  };
+
+  const handleAddComment = async (newComment) => {
+    const payload = {
+      postId: data?.postId,
+      content: newComment
+    };
+    const token = sessionStorage.getItem('token');
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    };
+    try {
+      const response = await axios.post(`https://localhost:7135/api/Comment`, payload, config);
+      if (response?.status === 200) {
+        setComments([...comments, response?.data]);
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   const GetCommentPage = async (pageNumber = 1) => {
     try {
@@ -189,7 +224,7 @@ export default function Post(props) {
                 display: 'inline-block',
                 maxWidth: 'calc(100% - 60px)',
                 flexGrow: 1,
-                position: 'relative'  // Added to position the icon button
+                position: 'relative'
               }}>
                 <TextField
                   fullWidth
@@ -197,9 +232,9 @@ export default function Post(props) {
                   placeholder="Viết bình luận..."
                   multiline
                   maxRows={4}
-                  // value={newComment}
-                  // onChange={handleCommentChange}
-                  sx={{ backgroundColor: '#333333', borderRadius: '10px' }}  // Background to match the comment box
+                  value={newComment}
+                  onChange={handleCommentChange}
+                  sx={{ backgroundColor: '#333333', borderRadius: '10px' }}
                   InputProps={{
                     sx: {
                       color: 'white',
@@ -225,7 +260,7 @@ export default function Post(props) {
                     right: '10px',
                     color: 'white'
                   }}
-                // onClick={submitComment}
+                  onClick={submitComment}
                 >
                   <SendIcon />
                 </IconButton>

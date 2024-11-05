@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import Post from '../views/post.jsx';
 
 const Profiles = () => {
-    const {userName} = useParams()
+    const { userName } = useParams()
     const navigate = useNavigate();
     const [profileData, setProfileData] = React.useState({});
     const [posts, setPosts] = React.useState([]);
@@ -17,7 +17,7 @@ const Profiles = () => {
         console.log(userName);
         const getProfileData = async () => {
             try {
-                if (userName === null) {    
+                if (userName === null) {
                     console.log('userName is null');
                     navigate('/home');
                 } else {
@@ -48,12 +48,14 @@ const Profiles = () => {
                             <Box sx={{ width: { xs: '100%', sm: 700 }, mb: 2 }}>
                                 <Post
                                     data={{
+                                        postId: item?.postId,
                                         author: item?.authorUserName,
                                         title: item?.title,
                                         content: item?.content,
                                         createdAt: item?.createdAt,
                                         likeCount: item?.likeCount,
-                                        commentCount: item?.commentCount
+                                        commentCount: item?.commentCount,
+                                        isLiked: item?.isLiked
                                     }}
                                 />
                             </Box>
