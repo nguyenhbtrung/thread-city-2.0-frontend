@@ -19,7 +19,9 @@ import { Box, Button, Divider, TextField } from '@mui/material';
 import ReplyIcon from '@mui/icons-material/Reply';
 import SendIcon from '@mui/icons-material/Send';
 import { useNavigate } from 'react-router-dom';
-
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { useState } from 'react';
 
 const CenteredContainer = styled('div')({
   display: 'flex',
@@ -33,13 +35,36 @@ export default function Post(props) {
     data
   } = props;
 
-  const expanded = React.useState(false);
-  const [likeCount, SetLikeCount] = React.useState(data?.likeCount || 0);
-  const [like, SetLike] = React.useState(data?.isLiked || false);
-  const [commentsVisible, setCommentsVisible] = React.useState(false);
-  const [comments, setComments] = React.useState([]);
-  const [newComment, setNewComment] = React.useState("");
-  const [newCommentList, setNewCommentList] = React.useState([]);
+  const expanded = useState(false);
+  const [likeCount, SetLikeCount] = useState(data?.likeCount || 0);
+  const [like, SetLike] = useState(data?.isLiked || false);
+  const [commentsVisible, setCommentsVisible] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
+  const [newCommentList, setNewCommentList] = useState([]);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenuOpen = (event) => {
+    if (sessionStorage.getItem('userName') !== data?.author){
+      console.log(sessionStorage.getItem('userName'));
+      console.log(data?.author);
+      return;
+    }
+      
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleDeletePost = () => {
+    // Add your delete post logic here
+    console.log('Delete post');
+    handleMenuClose();
+  };
 
   const navigate = useNavigate();
 
@@ -134,9 +159,24 @@ export default function Post(props) {
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon sx={{ color: 'white' }} />
-          </IconButton>
+          <div>
+            <IconButton aria-label="settings" onClick={handleMenuOpen}>
+              <MoreVertIcon sx={{ color: 'white' }} />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleMenuClose}
+              PaperProps={{
+                style: {
+                  backgroundColor: '#1c1c1c',
+                  color: 'white',
+                },
+              }}
+            >
+              <MenuItem onClick={handleDeletePost}>Xoá bài</MenuItem>
+            </Menu>
+          </div>
         }
         // Người dùng
         title={<Typography onClick={handleClickNavigateToAuthor} align="left" fontWeight="bold" sx={{ color: 'white' }}>{data?.author}</Typography>}
