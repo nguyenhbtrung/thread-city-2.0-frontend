@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import axios from 'axios';
 import SearchIcon from '@mui/icons-material/Search';
+import { SearchPosts } from '../Services/PostService';
 
 
 const SearchField = (props) => {
@@ -14,7 +15,7 @@ const SearchField = (props) => {
     const handleSearch = async () => {
         try {
             console.log(searchTerm);
-            const response = await axios.get(`https://localhost:7135/api/Post/search?SearchTerm=${searchTerm}`);
+            const response = await SearchPosts(searchTerm);
             const data = response.data;
             console.log(data);
             props.setSearchResults(data);

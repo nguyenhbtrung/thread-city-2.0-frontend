@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setNewPost } from '../../../Redux/postsSlice';
-import { CreatePost } from '../../../Services/PostService';
+import { CreatePost, UpdatePostScore } from '../../../Services/PostService';
 import { CreateHeadersConfigWithToken } from '../../../AppConst';
 
 const CreatePostDialog = (props) => {
@@ -32,13 +32,6 @@ const CreatePostDialog = (props) => {
     };
 
     const CreateNewPost = async () => {
-        // const token = sessionStorage.getItem('token');
-        // const config = {
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': `Bearer ${token}`
-        //     }
-        // };
         const config = CreateHeadersConfigWithToken();
         const data = {
             title: title,
@@ -72,7 +65,7 @@ const CreatePostDialog = (props) => {
         }
 
         try {
-            const res = await axios.put('https://localhost:7135/api/Post/update-posts-scores', {}, config);
+            const res = await UpdatePostScore(config);
             console.log(res);
         } catch (error) {
             console.log(error);

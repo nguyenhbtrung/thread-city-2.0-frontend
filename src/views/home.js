@@ -7,6 +7,8 @@ import { Box, Skeleton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setNewPost, setNewsfeed } from "../Redux/postsSlice";
 import PostList from "../Components/PostList";
+import { GetNewsfeed } from "../Services/PostService";
+import { CreateHeadersConfigWithToken } from "../AppConst";
 
 const Home = () => {
     const [state, setState] = useState({});
@@ -26,15 +28,9 @@ const Home = () => {
 
 
     const fetchData = async () => {
-        const token = sessionStorage.getItem('token');
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        };
+        const config = CreateHeadersConfigWithToken();
         try {
-            const response = await axios.get(`https://localhost:7135/api/Post/newsfeed?PageNumber=${page}`, config);
+            const response = await GetNewsfeed(page, config);
             dispatch(setNewsfeed(response?.data));
             setDataState(response?.data, 'posts');
             console.log('state.posts', state?.posts);
@@ -79,15 +75,9 @@ const Home = () => {
     }, [page]);
 
     const LoadMorePost = async () => {
-        const token = sessionStorage.getItem('token');
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        };
+        const config = CreateHeadersConfigWithToken();
         try {
-            const response = await axios.get(`https://localhost:7135/api/Post/newsfeed?PageNumber=${page}`, config);
+            const response = await GetNewsfeed(page, config);
             const newList = [...posts, ...response?.data]
             dispatch(setNewsfeed(newList));
             setDataState(newList, 'posts');

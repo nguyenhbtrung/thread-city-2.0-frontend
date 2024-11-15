@@ -23,6 +23,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { DeletePost } from '../Services/PostService';
 
 const CenteredContainer = styled('div')({
   display: 'flex',
@@ -71,7 +72,7 @@ export default function Post(props) {
       }
     };
     try {
-      const response = await axios.delete(`https://localhost:7135/api/Post/${data?.postId}`, config);
+      const response = await DeletePost(data?.postId, config);
       if (response?.status === 200) {
         toast.success("Đã xoá bài viết");
         onDeletedSuccessfully();
