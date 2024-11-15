@@ -9,6 +9,8 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setNewPost } from '../../../Redux/postsSlice';
+import { CreatePost } from '../../../Services/PostService';
+import { CreateHeadersConfigWithToken } from '../../../AppConst';
 
 const CreatePostDialog = (props) => {
     let {
@@ -26,22 +28,24 @@ const CreatePostDialog = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         setLoading(true);  // Set loading to true when submitting
-        CreatePost();
+        CreateNewPost();
     };
 
-    const CreatePost = async () => {
-        const token = sessionStorage.getItem('token');
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
+    const CreateNewPost = async () => {
+        // const token = sessionStorage.getItem('token');
+        // const config = {
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${token}`
+        //     }
+        // };
+        const config = CreateHeadersConfigWithToken();
+        const data = {
+            title: title,
+            content: content,
         };
         try {
-            const response = await axios.post('https://localhost:7135/api/Post', {
-                title: title,
-                content: content,
-            }, config);
+            const response = await CreatePost(data, config);
 
             if (response.status === 200) {
                 console.log("New post:", response.data);
