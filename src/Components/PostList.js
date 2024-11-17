@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid';
 import { Box, Skeleton } from "@mui/material";
-import Post from '../views/post';
+import Post from './post';
 
 
 const PostList = (props) => {

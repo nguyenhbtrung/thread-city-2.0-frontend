@@ -3,11 +3,9 @@ import ProfileInfo from "../Components/ProfileInfo.js";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Post from '../views/post.jsx';
 import PostList from "../Components/PostList.js";
 import { toast } from "react-toastify";
+import { GetProfileData, GetProfilePosts } from "../Services/UserService.js";
 
 const Profiles = () => {
     const { userName } = useParams()
@@ -28,12 +26,12 @@ const Profiles = () => {
                 console.log('userName is null');
                 navigate('/home');
             } else {
-                const response = await axios.get(`https://localhost:7135/api/User/profile/by-username/${userName}`);
-                const post = await axios.get(`https://localhost:7135/api/User/profile/by-username/${userName}/posts`);
-                if (response.status === 200 && post.status === 200) {
-                    setProfileData(response.data);
+                const userInfo = await GetProfileData(userName);
+                const post = await GetProfilePosts(userName, 1);
+                if (userInfo.status === 200 && post.status === 200) {
+                    setProfileData(userInfo.data);
                     setPosts(post.data);
-                    console.log(response.data);
+                    console.log(userInfo.data);
                     console.log(post.data);
                 }
             }
@@ -64,7 +62,7 @@ const Profiles = () => {
 
     const LoadMorePost = async () => {
         try {
-            const post = await axios.get(`https://localhost:7135/api/User/profile/by-username/${userName}/posts?PageNumber=${page}`);
+            const post = await GetProfilePosts(userName, page);
             if (post.status === 200) {
                 setPosts(prev => [...prev, ...post.data]);
             }

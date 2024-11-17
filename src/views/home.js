@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Post from "./post";
-import axios from "axios";
+import Post from "../Components/post";
 import { toast } from "react-toastify";
-import Grid from '@mui/material/Grid';
-import { Box, Skeleton } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setNewPost, setNewsfeed } from "../Redux/postsSlice";
 import PostList from "../Components/PostList";

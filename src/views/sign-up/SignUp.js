@@ -15,8 +15,8 @@ import { SitemarkIcon } from './CustomIcons';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import FormHelperText from '@mui/material/FormHelperText';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useState } from 'react';
+import { UserRegister } from '../../Services/UserService';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -72,12 +72,13 @@ export default function SignUp(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('https://localhost:7135/api/User/register', {
+      const data = {
         username: userName,
         email: email,
         phoneNumber: phoneNumber,
         password: password
-      });
+      };
+      const response = await UserRegister(data);
       console.log('Đăng kí thành công:', response.data);
       navigate('/sign-in');
     }
@@ -144,6 +145,9 @@ export default function SignUp(props) {
     setPhoneNumber(event.target.value);
   };
 
+  const handleClickHome = () => {
+    navigate('/home');
+  };
 
   return (
     <AppTheme {...props}>
@@ -151,7 +155,7 @@ export default function SignUp(props) {
       <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
       <SignUpContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
-          <SitemarkIcon />
+        <Link onClick={handleClickHome} sx={{ fontFamily: 'Roboto, sans-serif' }}>&larr; Quay lại trang chủ</Link>
           <Typography
             component="h1"
             variant="h4"

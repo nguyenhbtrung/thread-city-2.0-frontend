@@ -18,10 +18,10 @@ import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
 import FormHelperText from '@mui/material/FormHelperText';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { UserLogin } from '../../Services/UserService';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -102,10 +102,11 @@ export default function SignIn(props) {
       return;
     }
     try {
-      const response = await axios.post('https://localhost:7135/api/User/login', {
+      const data = {
         userName: userName,
         password: password
-      });
+      }
+      const response = await UserLogin(data);
       console.log('Đăng nhập thành công: ', response.data);
       const token = response.data.token;
       sessionStorage.setItem('userName', userName);
@@ -119,26 +120,13 @@ export default function SignIn(props) {
     }
   };
 
-  // const validateInputs = () => {
-  //   const password = document.getElementById('password');
-
-  //   let isValid = true;
-
-  //   if (!password.value || password.value.length < 6) {
-  //     setPasswordError(true);
-  //     setPasswordErrorMessage('Mật khẩu không hợp lệ');
-  //     isValid = false;
-  //   } else {
-  //     setPasswordError(false);
-  //     setPasswordErrorMessage('');
-  //   }
-
-  //   return isValid;
-  // };
-
   const navigate = useNavigate();
   const handleSignUpClick = () => {
     navigate('/sign-up');
+  };
+
+  const handleClickHome = () => {
+    navigate('/home');
   };
 
   return (
@@ -147,7 +135,7 @@ export default function SignIn(props) {
       <SignInContainer direction="column" justifyContent="space-between">
         <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
         <Card variant="outlined">
-          <SitemarkIcon />
+          <Link onClick={handleClickHome} sx={{ fontFamily: 'Roboto, sans-serif' }}>&larr; Quay lại trang chủ</Link>
           <Typography
             component="h1"
             variant="h4"

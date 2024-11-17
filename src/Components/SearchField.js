@@ -1,7 +1,6 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
-import axios from 'axios';
 import SearchIcon from '@mui/icons-material/Search';
 import { SearchPosts } from '../Services/PostService';
 
