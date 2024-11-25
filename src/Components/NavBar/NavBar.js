@@ -28,6 +28,7 @@ const NavBar = () => {
 
   const handleSignOut = () => {
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('userName');
     setToken(null); // Update the token state
     navigate('/sign-in');
   };

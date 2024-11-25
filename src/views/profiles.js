@@ -27,12 +27,9 @@ const Profiles = () => {
                 navigate('/home');
             } else {
                 const userInfo = await GetProfileData(userName);
-                const post = await GetProfilePosts(userName, 1);
-                if (userInfo.status === 200 && post.status === 200) {
+                if (userInfo.status === 200) {
                     setProfileData(userInfo.data);
-                    setPosts(post.data);
                     console.log(userInfo.data);
-                    console.log(post.data);
                 }
             }
         } catch (err) {
@@ -40,55 +37,72 @@ const Profiles = () => {
         }
     };
 
-    const handleScroll = () => {
-        const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-
-        if (scrollTop + clientHeight >= scrollHeight) {
-            setPage(prev => prev + 1);
-        }
-    };
-
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
-
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-
-    useEffect(() => {
-        if (page > 1) {
-            LoadMorePost();
-        }
-    }, [page]);
-
-    const LoadMorePost = async () => {
+    const getProfilePost = async () => {
         try {
-            const post = await GetProfilePosts(userName, page);
-            if (post.status === 200) {
-                setPosts(prev => [...prev, ...post.data]);
+            if (userName === null) {
+                console.log('userName is null');
+                navigate('/home');
+            } else {
+                const post = await GetProfilePosts(userName, 1);
+                if (post.status === 200) {
+                    setPosts(post.data);
+                    console.log(post.data);
+                }
             }
         } catch (error) {
             toast.error("Có lỗi xảy ra");
         }
-    };
+}
 
-    const ResetPosts = () => {
-        setPage(1);
-        setPosts([]);
-        getProfileData();
+const handleScroll = () => {
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+
+    if (scrollTop + clientHeight >= scrollHeight) {
+        setPage(prev => prev + 1);
     }
+};
 
-    return (
-        <div style={{ marginTop: '20px' }}>
-            <div style={{ margin: 0, display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-                {profileData && <ProfileInfo{...profileData} />}
-            </div>
-            <PostList
-                posts={posts}
-                loading={loadingPost}
-                onDeletedSuccessfully={ResetPosts}
-            />
+useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
+useEffect(() => {
+    if (page > 1) {
+        LoadMorePost();
+    }
+}, [page]);
+
+const LoadMorePost = async () => {
+    try {
+        const post = await GetProfilePosts(userName, page);
+        if (post.status === 200) {
+            setPosts(prev => [...prev, ...post.data]);
+        }
+    } catch (error) {
+        toast.error("Có lỗi xảy ra");
+    }
+};
+
+const ResetPosts = () => {
+    setPage(1);
+    setPosts([]);
+    getProfileData();
+}
+
+return (
+    <div style={{ marginTop: '20px' }}>
+        <div style={{ margin: 0, display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+            {profileData && <ProfileInfo{...profileData} />}
         </div>
-    )
+        <PostList
+            posts={posts}
+            loading={loadingPost}
+            onDeletedSuccessfully={ResetPosts}
+        />
+    </div>
+)
 }
 
 export default Profiles
