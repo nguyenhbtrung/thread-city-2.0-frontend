@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { SearchPosts } from '../Services/PostService';
+import { CreateHeadersConfigWithToken } from '../AppConst';
 
 
 const SearchField = (props) => {
@@ -12,9 +13,10 @@ const SearchField = (props) => {
     }
 
     const handleSearch = async () => {
+        const config = CreateHeadersConfigWithToken();
         try {
             console.log(searchTerm);
-            const response = await SearchPosts(searchTerm);
+            const response = await SearchPosts(searchTerm, config);
             const data = response.data;
             console.log(data);
             props.setSearchResults(data);

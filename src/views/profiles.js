@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import PostList from "../Components/PostList.js";
 import { toast } from "react-toastify";
 import { GetProfileData, GetProfilePosts } from "../Services/UserService.js";
+import { CreateHeadersConfigWithToken } from "../AppConst.js";
 
 const Profiles = () => {
     const { userName } = useParams()
@@ -44,7 +45,8 @@ const Profiles = () => {
                 console.log('userName is null');
                 navigate('/home');
             } else {
-                const post = await GetProfilePosts(userName, 1);
+                const config = CreateHeadersConfigWithToken();
+                const post = await GetProfilePosts(userName, 1, config);
                 if (post.status === 200) {
                     setPosts(post.data);
                     console.log(post.data);

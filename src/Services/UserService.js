@@ -15,6 +15,6 @@ export const GetProfileData = (userName) => {
     return axios.get(url + `/profile/by-username/${userName}`);
 };
 
-export const GetProfilePosts = (userName, PageNumber) => {
-    return axios.get(url + `/profile/by-username/${userName}/posts?PageNumber=${PageNumber}`);
+export const GetProfilePosts = (userName, PageNumber, config) => {
+    return axios.get(url + `/profile/by-username/${userName}/posts?PageNumber=${PageNumber}`, config);
 };
