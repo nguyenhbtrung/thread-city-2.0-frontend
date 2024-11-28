@@ -13,7 +13,9 @@ const Home = () => {
     const [page, setPage] = useState(1);
     const [loadingPost, setLoadingPost] = useState(true);
 
-
+    useEffect(() => {
+        document.title = `Trang chủ`;
+    });
 
     const setDataState = (value, source) => {
         setState((pre) => ({ ...pre, [source]: value }))

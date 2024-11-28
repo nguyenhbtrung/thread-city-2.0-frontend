@@ -10,10 +10,10 @@ const PostList = (props) => {
         onDeletedSuccessfully
     } = props;
     return (
-        <Grid container direction="column" alignItems="center" spacing={2}>
+        <Grid container direction="column" alignItems="center" spacing={2} style={{ paddingTop: '30px' }}>
             {posts?.map((item, index) => {
                 return (
-                    <Grid item key={index}>
+                    <Grid item key={index} style={{ paddingTop: '2px' }}>
                         <Box sx={{ width: { xs: '100%', sm: 700 }, mb: 2 }}>
                             <Post
                                 data={{
