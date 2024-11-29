@@ -45,16 +45,16 @@ const ProfileInfo = (props) => {
                 width='100%'
                 height='auto'
                 src={coverImgId ? `` : `https://cdn.oneesports.vn/cdn-data/sites/4/2024/11/lmht-esports-riot-games-cktg-2024-t1-vo-dich.jpg`}
-                style={{ maxHeight: '200px', objectFit: 'cover', marginBottom: '-50px' }}
+                style={{ maxHeight: '200px', objectFit: 'cover', marginBottom: '-7.5%' }}
             />
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', maxWidth: '100%' }}>
 
                 <Avatar
-                    sx={{ bgcolor: 'gray', width: 100, height: 100, left: 20, }}
+                    sx={{ bgcolor: 'gray', width: '15%', height: '15%', left: '3%', }}
                     aria-label="recipe"
                     src={avatarImgId ? `https://localhost:7135/api/User/avatar/${avatarImgId}` : 'https://1.bp.blogspot.com/-R8gnX_mf-hI/XZwpsZoVyNI/AAAAAAAADOc/zfTGRKC1VyUVP2hxELrNk04TJTrHDg0mQCLcBGAsYHQ/s0/72487982_2513824035518413_4387733843654737920_n.png'}
                 />
-                <div style={{ textAlign: 'right' }}>
+                <div style={{ paddingLeft: '80%', paddingTop: '7%' }}>
                     <IconButton aria-label="settings" onClick={handleMenuOpen}>
                         <MoreVertIcon sx={{ color: 'white' }} />
                     </IconButton>
@@ -67,6 +67,15 @@ const ProfileInfo = (props) => {
                                 backgroundColor: '#1c1c1c',
                                 color: 'white',
                             },
+
+                        }}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
                         }}
                     >
                         <MenuItem >Chỉnh sửa</MenuItem>
