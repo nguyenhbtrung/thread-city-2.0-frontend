@@ -8,7 +8,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { getNavItems } from './Consts/navList';
 import { useNavigate } from "react-router-dom";
-import CreatePostDialog from './Consts/CreatePostDialog';
+import CreatePostDialog from '../CreatePostDialog';
 
 const NavBar = () => {
   const [openCreatePost, setOpenCreatePost] = useState(false);

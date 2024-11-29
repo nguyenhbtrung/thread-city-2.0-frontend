@@ -3,14 +3,14 @@ import {
     TextField, Button, Dialog, DialogActions, DialogContent, DialogTitle, useTheme,
     CircularProgress
 } from '@mui/material';
-import { colorSchemes } from '../../../views/shared-theme/themePrimitives';
+import { colorSchemes } from '../views/shared-theme/themePrimitives';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setNewPost } from '../../../Redux/postsSlice';
-import { CreatePost, UpdatePostScore } from '../../../Services/PostService';
-import { CreateHeadersConfigWithToken } from '../../../AppConst';
+import { setNewPost } from '../Redux/postsSlice';
+import { CreatePost, UpdatePostScore } from '../Services/PostService';
+import { CreateHeadersConfigWithToken } from '../AppConst';
 
 const CreatePostDialog = (props) => {
     let {
