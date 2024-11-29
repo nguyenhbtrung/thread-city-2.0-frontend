@@ -21,9 +21,24 @@ function App() {
       <Provider store={store}>
         <Router>
           <div>
-            <ConditionalNavBar />
+            <ConditionalNavBar
+              Content={
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/sign-up" element={<SignUp />} />
+                  <Route path="/sign-in" element={<SignIn />} />
+                  <Route path="/home" element={<Home />} />
+                  <Route path="/search" element={<Search />} />
+                  <Route path="/post" element={<PostForm />} />
+                  <Route path="/favorite" element={<Favorite />} />
+                  <Route path="/profile/by-username/:userName" element={<Profiles />} />
+                  <Route path="/pin" element={<Pin />} />
+                  <Route path="/menu" element={<Menu />} />
+                </Routes>
+              }
+            />
           </div>
-          <Routes>
+          {/* <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/sign-in" element={<SignIn />} />
@@ -31,10 +46,11 @@ function App() {
             <Route path="/search" element={<Search />} />
             <Route path="/post" element={<PostForm />} />
             <Route path="/favorite" element={<Favorite />} />
-            <Route path="/profile/by-username/:userName" element={<Profiles/>} />
+            <Route path="/profile/by-username/:userName" element={<Profiles />} />
             <Route path="/pin" element={<Pin />} />
             <Route path="/menu" element={<Menu />} />
-          </Routes>
+          </Routes> */}
+          {/* </Box> */}
         </Router>
         <ToastContainer autoClose={2000} />
       </Provider>
@@ -42,13 +58,13 @@ function App() {
   );
 }
 
-const ConditionalNavBar = () => {
+const ConditionalNavBar = ({ Content }) => {
   const location = useLocation();
 
   // Ẩn thanh NavBar ở trang đăng kí/ đăng nhập
   const hideNavBarPaths = ['/sign-in', '/sign-up'];
 
-  return !hideNavBarPaths.includes(location.pathname) ? <NavBar /> : null;
+  return !hideNavBarPaths.includes(location.pathname) ? <NavBar Content={Content} /> : Content;
 };
 
 export default App;

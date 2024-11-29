@@ -6,6 +6,7 @@ import { setNewPost, setNewsfeed } from "../Redux/postsSlice";
 import PostList from "../Components/PostList";
 import { GetNewsfeed } from "../Services/PostService";
 import { CreateHeadersConfigWithToken } from "../AppConst";
+import { setTitle } from "../Redux/titleSlice";
 
 const Home = () => {
     const [state, setState] = useState({});
@@ -13,9 +14,6 @@ const Home = () => {
     const [page, setPage] = useState(1);
     const [loadingPost, setLoadingPost] = useState(true);
 
-    useEffect(() => {
-        document.title = `Trang chủ`;
-    });
 
     const setDataState = (value, source) => {
         setState((pre) => ({ ...pre, [source]: value }))
@@ -46,6 +44,10 @@ const Home = () => {
             setPage(prev => prev + 1);
         }
     };
+
+    useEffect(() => {
+        dispatch(setTitle("Trang chủ"));
+    }, []);
 
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);

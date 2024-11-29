@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -10,9 +9,118 @@ import { getNavItems } from './Consts/navList';
 import { useNavigate } from "react-router-dom";
 import CreatePostDialog from '../CreatePostDialog';
 
-const NavBar = () => {
+import { styled, useTheme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import MuiDrawer from '@mui/material/Drawer';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import CssBaseline from '@mui/material/CssBaseline';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { useSelector } from 'react-redux';
+
+
+const drawerWidth = 240;
+
+const openedMixin = (theme) => ({
+  width: drawerWidth,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+  backgroundColor: "#121212",
+});
+
+const closedMixin = (theme) => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+  backgroundColor: "#121212",
+});
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  backgroundColor: "#121212",
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  variants: [
+    {
+      props: ({ open }) => open,
+      style: {
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
+      },
+    },
+  ],
+}));
+
+const StyledDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme }) => ({
+
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    variants: [
+      {
+        props: ({ open }) => open,
+        style: {
+          ...openedMixin(theme),
+          '& .MuiDrawer-paper': openedMixin(theme),
+        },
+      },
+      {
+        props: ({ open }) => !open,
+        style: {
+          ...closedMixin(theme),
+          '& .MuiDrawer-paper': closedMixin(theme),
+        },
+      },
+    ],
+  }),
+);
+
+export default function NavBar({ Content }) {
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+  const title = useSelector(state => state.title);
   const [openCreatePost, setOpenCreatePost] = useState(false);
   const [token, setToken] = useState(sessionStorage.getItem('token'));
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
   const handleClickOpenCreatePost = () => {
     setOpenCreatePost(true);
@@ -24,14 +132,23 @@ const NavBar = () => {
 
   const navigate = useNavigate();
 
-  const drawerWidth = 200;
-
   const handleSignOut = () => {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('userName');
     setToken(null); // Update the token state
     navigate('/sign-in');
   };
+
+  const handleClickNavigate = (item) => {
+    if (item.label === 'Đăng xuất') {
+      handleSignOut();
+    } else if (item.label === 'Đăng bài') {
+      handleClickOpenCreatePost();
+    } else {
+      navigate(item.route);
+    }
+  };
+
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -45,55 +162,161 @@ const NavBar = () => {
     };
   }, []);
 
-  useEffect(() => {
-    // This effect will run whenever the token state changes
-  }, [token]);
-
   return (
-    <div>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-            backgroundColor: '#0A0A0A',
-            color: '#FFFFFF'
-          },
-        }}
-        variant="permanent"
-        anchor="left"
-      >
-        <Divider />
-        <List sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-          {getNavItems(token).map((item) => (
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar position="fixed" open={open}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={[
+              {
+                marginRight: 5,
+              },
+              open && { display: 'none' },
+            ]}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+            {title}
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <StyledDrawer variant="permanent" open={open}>
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose} sx={{ color: "#FFFFFF", }}>
+            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
+        </DrawerHeader>
+
+        <List >
+          {getNavItems(token).slice(0, -2).map((item) => (
             <ListItem
-              button
               key={item.id}
-              sx={{ paddingRight: '0px' }}
-              onClick={() => {
-                if (item.label === 'Đăng xuất') {
-                  handleSignOut();
-                } else if (item.label === 'Đăng bài') {
-                  handleClickOpenCreatePost();
-                } else {
-                  navigate(item.route);
-                }
-              }}>
-              <ListItemButton>
-                <ListItemIcon sx={{ color: '#FFFFFF' }}>
+              disablePadding
+              sx={{ display: 'block' }}
+              onClick={() => handleClickNavigate(item)}
+            >
+              <ListItemButton
+                sx={[
+                  {
+                    minHeight: 48,
+                    px: 2.5,
+                    color: "#FFFFFF",
+                  },
+                  open
+                    ? {
+                      justifyContent: 'initial',
+                    }
+                    : {
+                      justifyContent: 'center',
+                    },
+                ]}
+              >
+                <ListItemIcon
+                  sx={[
+                    {
+                      minWidth: 0,
+                      justifyContent: 'center',
+                      color: "#FFFFFF",
+                    },
+                    open
+                      ? {
+                        mr: 3,
+                      }
+                      : {
+                        mr: 'auto',
+                      },
+                  ]}
+                >
                   {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={item.label} />
+                <ListItemText
+                  primary={item.label}
+                  sx={[
+                    open
+                      ? {
+                        opacity: 1,
+                      }
+                      : {
+                        opacity: 0,
+                      },
+                  ]}
+                />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
-      </Drawer>
+        <Divider />
+        <Box sx={{ flexGrow: 1 }} />
+        <List sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+          {getNavItems(token).slice(-2).map((item) => (
+            <ListItem
+              key={item.id}
+              disablePadding
+              sx={{ display: 'block' }}
+              onClick={() => handleClickNavigate(item)}
+            >
+              <ListItemButton
+                sx={[
+                  {
+                    minHeight: 48,
+                    px: 2.5,
+                    color: "#FFFFFF",
+                  },
+                  open
+                    ? {
+                      justifyContent: 'initial',
+                    }
+                    : {
+                      justifyContent: 'center',
+                    },
+                ]}
+              >
+                <ListItemIcon
+                  sx={[
+                    {
+                      minWidth: 0,
+                      justifyContent: 'center',
+                      color: "#FFFFFF",
+                    },
+                    open
+                      ? {
+                        mr: 3,
+                      }
+                      : {
+                        mr: 'auto',
+                      },
+                  ]}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.label}
+                  sx={[
+                    open
+                      ? {
+                        opacity: 1,
+                      }
+                      : {
+                        opacity: 0,
+                      },
+                  ]}
+                />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </StyledDrawer>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <DrawerHeader />
+        {Content}
+      </Box>
       <CreatePostDialog open={openCreatePost} handleClose={handleCloseCreatePost} />
-    </div>
-  )
+    </Box>
+  );
 }
-
-export default NavBar;
