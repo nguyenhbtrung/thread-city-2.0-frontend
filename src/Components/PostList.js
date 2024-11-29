@@ -36,9 +36,9 @@ const PostList = (props) => {
             {loading && (
                 <Grid item>
                     <Box sx={{ width: { xs: '100%', sm: 700 }, mb: 2 }}>
-                        <Skeleton variant="rectangular" height={118} />
-                        <Skeleton variant="text" />
-                        <Skeleton variant="text" />
+                        <Skeleton sx={{ bgcolor: 'grey.900' }} variant="rectangular" height={118} />
+                        <Skeleton sx={{ bgcolor: 'grey.900' }} variant="text" />
+                        <Skeleton sx={{ bgcolor: 'grey.900' }} variant="text" />
                     </Box>
                 </Grid>
             )}
