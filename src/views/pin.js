@@ -1,13 +1,14 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setTitle } from "../Redux/titleSlice";
+import { setId, setTitle } from "../Redux/titleSlice";
 const Pin = () => {
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(setTitle("Lưu trữ"));
+        dispatch(setId(5));
     }, []);
     return (
         <div style={{ margin: 0 }}>

@@ -3,7 +3,7 @@ import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
 import { useEffect, useState } from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useDispatch } from 'react-redux';
-import { setTitle } from '../Redux/titleSlice';
+import { setId, setTitle } from '../Redux/titleSlice';
 
 // props gom ten, anh dai dien, anh bia, so bai dang, so nguoi theo doi, so nguoi dang theo doi
 const ProfileInfo = (props) => {
@@ -27,6 +27,7 @@ const ProfileInfo = (props) => {
 
     useEffect(() => {
         dispatch(setTitle(`${userName} - Trang cá nhân`));
+        dispatch(setId(4));
     }, [userName]);
 
 

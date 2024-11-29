@@ -182,7 +182,7 @@ export default function NavBar({ Content }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
-            {title}
+            {title.title}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -206,7 +206,7 @@ export default function NavBar({ Content }) {
                   {
                     minHeight: 48,
                     px: 2.5,
-                    color: "#FFFFFF",
+                    color: item.id === title.id ? '#FFFFFF' : '#7e7e7e',
                   },
                   open
                     ? {
@@ -222,7 +222,7 @@ export default function NavBar({ Content }) {
                     {
                       minWidth: 0,
                       justifyContent: 'center',
-                      color: "#FFFFFF",
+                      color: item.id === title.id ? '#FFFFFF' : '#7e7e7e',
                     },
                     open
                       ? {
@@ -266,7 +266,7 @@ export default function NavBar({ Content }) {
                   {
                     minHeight: 48,
                     px: 2.5,
-                    color: "#FFFFFF",
+                    color: item.id === title.id ? '#FFFFFF' : '#7e7e7e',
                   },
                   open
                     ? {
@@ -282,7 +282,7 @@ export default function NavBar({ Content }) {
                     {
                       minWidth: 0,
                       justifyContent: 'center',
-                      color: "#FFFFFF",
+                      color: item.id === title.id ? '#FFFFFF' : '#7e7e7e',
                     },
                     open
                       ? {

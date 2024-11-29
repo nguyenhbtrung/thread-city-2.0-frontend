@@ -6,7 +6,7 @@ import { setNewPost, setNewsfeed } from "../Redux/postsSlice";
 import PostList from "../Components/PostList";
 import { GetNewsfeed } from "../Services/PostService";
 import { CreateHeadersConfigWithToken } from "../AppConst";
-import { setTitle } from "../Redux/titleSlice";
+import { setId, setTitle } from "../Redux/titleSlice";
 
 const Home = () => {
     const [state, setState] = useState({});
@@ -47,6 +47,7 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(setTitle("Trang chủ"));
+        dispatch(setId(0));
     }, []);
 
     useEffect(() => {
