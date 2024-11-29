@@ -31,7 +31,7 @@ function App() {
                   <Route path="/search" element={<Search />} />
                   <Route path="/post" element={<PostForm />} />
                   <Route path="/favorite" element={<Favorite />} />
-                  <Route path="/profile/by-username/:userName" element={<Profiles />} />
+                  <Route path="/profile/username/:userName" element={<Profiles />} />
                   <Route path="/pin" element={<Pin />} />
                   <Route path="/menu" element={<Menu />} />
                 </Routes>

@@ -10,7 +10,7 @@ const PostList = (props) => {
         onDeletedSuccessfully
     } = props;
     return (
-        <Grid container direction="column" alignItems="center" spacing={2} style={{ paddingTop: '30px' }}>
+        <Grid container direction="column" alignItems="center" spacing={2} style={{ paddingTop: '20px' }}>
             {posts?.map((item, index) => {
                 return (
                     <Grid item key={index} style={{ paddingTop: '2px' }}>

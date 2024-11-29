@@ -36,7 +36,7 @@ export const getNavItems = (token) => [
         id: 4,
         icon: <PermIdentityIcon />,
         label: 'Cá nhân',
-        route: token ? `profile/by-username/${sessionStorage.getItem('userName')}` : 'sign-in'
+        route: token ? `profile/username/${sessionStorage.getItem('userName')}` : 'sign-in'
     },
     {
         id: 5,

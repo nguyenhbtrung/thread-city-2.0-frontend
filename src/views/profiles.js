@@ -1,7 +1,6 @@
 import React from "react";
 import ProfileInfo from "../Components/ProfileInfo.js";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import { useEffect } from "react";
 import PostList from "../Components/PostList.js";
 import { toast } from "react-toastify";
@@ -96,8 +95,8 @@ const Profiles = () => {
     }
 
     return (
-        <div style={{ marginTop: '20px' }}>
-            <div style={{ margin: 0, display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+        <div style={{ marginTop: '5px' }}>
+            <div style={{ margin: 0, display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
                 {profileData && <ProfileInfo{...profileData} />}
             </div>
             <PostList
