@@ -11,7 +11,7 @@ import MessageIcon from '@mui/icons-material/Message';
 import ShareIcon from '@mui/icons-material/Share';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { convertToCustomMonthDate } from '../AppConst';
+import { API_PATH, convertToCustomMonthDate } from '../AppConst';
 import axios from 'axios';
 import { Box, Divider, TextField } from '@mui/material';
 import ReplyIcon from '@mui/icons-material/Reply';
@@ -115,7 +115,7 @@ export default function Post(props) {
       }
     };
     try {
-      const response = await axios.post(`https://localhost:7135/api/Comment`, payload, config);
+      const response = await axios.post(`${API_PATH}/Comment`, payload, config);
       if (response?.status === 200) {
         setComments([...comments, response?.data]);
       }
@@ -128,7 +128,7 @@ export default function Post(props) {
 
   const GetCommentPage = async (pageNumber = 1) => {
     try {
-      const response = await axios.get(`https://localhost:7135/api/Comment/${data?.postId}?PageNumber=${pageNumber}`);
+      const response = await axios.get(`${API_PATH}/Comment/${data?.postId}?PageNumber=${pageNumber}`);
       if (response?.status === 200) {
         return response?.data;
       }
@@ -148,7 +148,7 @@ export default function Post(props) {
       }
     };
     try {
-      const response = await axios.put(`https://localhost:7135/api/LikePost/${data?.postId}`, {}, config);
+      const response = await axios.put(`${API_PATH}/LikePost/${data?.postId}`, {}, config);
       console.log(response?.data);
       SetLikeCount(response?.data?.likeCount);
       SetLike(response?.data?.isLiked);

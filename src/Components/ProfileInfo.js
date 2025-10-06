@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useDispatch } from 'react-redux';
 import { setId, setTitle } from '../Redux/titleSlice';
+import { API_PATH } from '../AppConst';
 
 // props gom ten, anh dai dien, anh bia, so bai dang, so nguoi theo doi, so nguoi dang theo doi
 const ProfileInfo = (props) => {
@@ -52,7 +53,7 @@ const ProfileInfo = (props) => {
                 <Avatar
                     sx={{ bgcolor: 'gray', width: '15%', height: '15%', left: '3%', }}
                     aria-label="recipe"
-                    src={avatarImgId ? `https://localhost:7135/api/User/avatar/${avatarImgId}` : 'https://1.bp.blogspot.com/-R8gnX_mf-hI/XZwpsZoVyNI/AAAAAAAADOc/zfTGRKC1VyUVP2hxELrNk04TJTrHDg0mQCLcBGAsYHQ/s0/72487982_2513824035518413_4387733843654737920_n.png'}
+                    src={avatarImgId ? `${API_PATH}/User/avatar/${avatarImgId}` : 'https://1.bp.blogspot.com/-R8gnX_mf-hI/XZwpsZoVyNI/AAAAAAAADOc/zfTGRKC1VyUVP2hxELrNk04TJTrHDg0mQCLcBGAsYHQ/s0/72487982_2513824035518413_4387733843654737920_n.png'}
                 />
                 <div style={{ paddingLeft: '80%', paddingTop: '7%' }}>
                     <IconButton aria-label="settings" onClick={handleMenuOpen}>

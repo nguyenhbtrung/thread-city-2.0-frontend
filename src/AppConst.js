@@ -1,5 +1,5 @@
 
-export const API_PATH = 'https://localhost:7135/api';
+export const API_PATH = process.env.REACT_APP_API_BASE_URL + '/api';
 
 export const CreateHeadersConfigWithToken = () => {
     const token = sessionStorage.getItem('token');

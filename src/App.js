@@ -14,8 +14,14 @@ import store from './Redux/store.js';
 import { Provider } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { useEffect } from 'react';
+import { API_PATH } from './AppConst.js';
 
 function App() {
+  useEffect(() => {
+    console.log(">>>Check api_path:", API_PATH);
+  }, []);
+
   return (
     <div className="App">
       <Provider store={store}>
