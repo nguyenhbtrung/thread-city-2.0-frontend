@@ -143,7 +143,11 @@ export default function NavBar({ Content }) {
     if (item.label === 'Đăng xuất') {
       handleSignOut();
     } else if (item.label === 'Đăng bài') {
-      handleClickOpenCreatePost();
+      if (!token) {
+        navigate('sign-in');
+      } else {
+        handleClickOpenCreatePost();
+      }
     } else {
       navigate(item.route);
     }
