@@ -13,13 +13,13 @@ const SearchField = (props) => {
     }
 
     const handleSearch = async () => {
+        props.setLoading(true);
         const config = CreateHeadersConfigWithToken();
         try {
-            console.log(searchTerm);
             const response = await SearchPosts(searchTerm, config);
             const data = response.data;
-            console.log(data);
-            props.setSearchResults(data);
+            props.setLoading(false);
+            props.handleSearchResults(data);
         }
         catch (err) {
             console.log(err);
@@ -33,6 +33,7 @@ const SearchField = (props) => {
                 id="outlined-search"
                 label="Tìm kiếm"
                 type="search"
+                placeholder="Tìm bài viết theo tiêu đề hoặc nội dung..."
                 onChange={handleSearchChange}
                 fullWidth
                 sx={{

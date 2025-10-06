@@ -4,10 +4,12 @@ import PostList from "../Components/PostList.js";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setId, setTitle } from "../Redux/titleSlice.js";
+import { Box, Typography } from "@mui/material";
 
 const Search = () => {
     const [searchResults, setSearchResults] = useState([]);
-    const [loadingPost, setLoadingPost] = useState(true);
+    const [hasSearched, setHasSearched] = useState(false);
+    const [loadingPost, setLoadingPost] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -15,14 +17,30 @@ const Search = () => {
         dispatch(setId(1));
     }, []);
 
+    const handleSearchResults = (results) => {
+        setSearchResults(results);
+        setHasSearched(true);
+    }
+
     return (
-        <div style={{ margin: 0 }}>
-            <SearchField setSearchResults={setSearchResults} />
+        <Box >
+            <SearchField
+                handleSearchResults={handleSearchResults}
+                setLoading={setLoadingPost}
+            />
+            {(hasSearched && !searchResults?.length) &&
+                <Typography
+                    variant="body1"
+                    sx={{ px: 2, py: 1, fontStyle: "italic" }}
+                >
+                    Không tìm thấy kết quả nào.
+                </Typography>
+            }
             <PostList
                 posts={searchResults}
                 loading={loadingPost}
             />
-        </div>
+        </Box>
     )
 }
 
