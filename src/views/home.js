@@ -65,6 +65,7 @@ const Home = () => {
         } else {
             dispatch(setNewsfeed([newPost, ...posts]));
             dispatch(setNewPost(null));
+            loadingPostRef.current = false;
         }
 
     }, []);
