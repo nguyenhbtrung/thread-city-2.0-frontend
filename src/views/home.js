@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Post from "../Components/post";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,8 +12,7 @@ const Home = () => {
     const [state, setState] = useState({});
 
     const [page, setPage] = useState(1);
-    const [loadingPost, setLoadingPost] = useState(true);
-
+    const loadingPostRef = useRef(true);
 
     const setDataState = (value, source) => {
         setState((pre) => ({ ...pre, [source]: value }))
@@ -27,20 +26,22 @@ const Home = () => {
     const fetchData = async () => {
         const config = CreateHeadersConfigWithToken();
         try {
+            loadingPostRef.current = true;
             const response = await GetNewsfeed(page, config);
             dispatch(setNewsfeed(response?.data));
             setDataState(response?.data, 'posts');
-            console.log('state.posts', state?.posts);
-            console.log('posts', posts);
         } catch (error) {
             toast.error("Có lỗi xảy ra");
+        } finally {
+            loadingPostRef.current = false;
         }
     };
 
     const handleScroll = () => {
         const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
-        if (scrollTop + clientHeight >= scrollHeight) {
+        if (scrollTop + clientHeight >= scrollHeight - window.innerHeight && !loadingPostRef.current) {
+            loadingPostRef.current = true;
             setPage(prev => prev + 1);
         }
     };
@@ -62,8 +63,6 @@ const Home = () => {
         if (newPost == null) {
             fetchData();
         } else {
-            // posts = posts || []
-            console.log("update:", [newPost, ...posts]);
             dispatch(setNewsfeed([newPost, ...posts]));
             dispatch(setNewPost(null));
         }
@@ -83,18 +82,16 @@ const Home = () => {
             const newList = [...posts, ...response?.data]
             dispatch(setNewsfeed(newList));
             setDataState(newList, 'posts');
-            console.log('state.posts', state?.posts);
-            console.log('posts', posts);
         } catch (error) {
             toast.error("Có lỗi xảy ra");
+        } finally {
+            loadingPostRef.current = false;
         }
     };
 
     useEffect(() => {
-        // posts = posts || []
         if (newPost == null)
             return;
-        console.log("update:", [newPost, ...posts]);
         dispatch(setNewsfeed([newPost, ...posts]));
         dispatch(setNewPost(null));
     }, [newPost]);
@@ -110,7 +107,7 @@ const Home = () => {
     return (
         <PostList
             posts={posts}
-            loading={loadingPost}
+            loading={loadingPostRef.current}
             onDeletedSuccessfully={ResetPage}
         />
     )
