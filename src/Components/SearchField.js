@@ -1,74 +1,79 @@
-import React from 'react';
 import TextField from '@mui/material/TextField';
-import { Button } from '@mui/material';
+import { Button, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { SearchPosts } from '../Services/PostService';
-import { CreateHeadersConfigWithToken } from '../AppConst';
-
 
 const SearchField = (props) => {
-    const [searchTerm, setSearchTerm] = React.useState('');
-    const handleSearchChange = (event) => {
-        setSearchTerm(event.target.value);
-    }
+    const {
+        handleSearchChange,
+        handleSearch,
+    } = props;
 
-    const handleSearch = async () => {
-        props.setLoading(true);
-        const config = CreateHeadersConfigWithToken();
-        try {
-            const response = await SearchPosts(searchTerm, config);
-            const data = response.data;
-            props.setLoading(false);
-            props.handleSearchResults(data);
-        }
-        catch (err) {
-            console.log(err);
-        }
-    }
-
+    const handleSubmit = (e) => {
+        e.preventDefault(); // tránh reload trang
+        handleSearch();
+    };
 
     return (
-        <div style={{ margin: '20px 0', width: '75%', display: 'flex', justifyContent: 'center', marginLeft: '220px' }}>
+        <Box
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{
+                margin: '20px 0',
+                width: '75%',
+                display: 'flex',
+                justifyContent: 'center',
+                marginLeft: '220px',
+            }}
+        >
             <TextField
                 id="outlined-search"
                 label="Tìm kiếm"
                 type="search"
                 placeholder="Tìm bài viết theo tiêu đề hoặc nội dung..."
-                onChange={handleSearchChange}
+                onChange={(e) => handleSearchChange(e.target.value)}
                 fullWidth
                 sx={{
                     '& .MuiOutlinedInput-root': {
-                        '& fieldset': {
-                            borderColor: 'white',
-                        },
-                        '&:hover fieldset': {
-                            borderColor: 'white',
-                        },
-                        '&.Mui-focused fieldset': {
-                            borderColor: 'white',
-                        },
+                        '& fieldset': { borderColor: 'white' },
+                        '&:hover fieldset': { borderColor: 'white' },
+                        '&.Mui-focused fieldset': { borderColor: 'white' },
                     },
-                    '& .MuiInputBase-input': {
-                        color: 'white',
+                    '& .MuiInputBase-input': { color: 'white' },
+                    '& input:-webkit-autofill': {
+                        WebkitBoxShadow: '0 0 0 1000px #121212 inset',
+                        WebkitTextFillColor: 'white',
+                        caretColor: 'white',
+                        transition: 'background-color 5000s ease-in-out 0s',
+                    },
+                    '& input:-webkit-autofill:hover': {
+                        WebkitBoxShadow: '0 0 0 1000px #121212 inset',
+                        WebkitTextFillColor: 'white',
+                    },
+                    '& input:-webkit-autofill:focus': {
+                        WebkitBoxShadow: '0 0 0 1000px #121212 inset',
+                        WebkitTextFillColor: 'white',
                     },
                 }}
-                InputLabelProps={{
-                    style: { color: 'white' },
+                slotProps={{
+                    inputLabel: {
+                        style: { color: 'white' },
+                    }
                 }}
             />
             <Button
+                type="submit"
                 variant="contained"
-                onClick={handleSearch}
                 sx={{
                     marginLeft: '10px',
                     backgroundColor: '#121212',
                     borderColor: '#121212',
-                    border: 1
-                }}>
+                    border: 1,
+                }}
+            >
                 <SearchIcon />
             </Button>
-        </div>
+        </Box>
     );
-}
+};
 
 export default SearchField;

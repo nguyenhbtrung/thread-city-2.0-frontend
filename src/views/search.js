@@ -5,8 +5,11 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setId, setTitle } from "../Redux/titleSlice.js";
 import { Box, Typography } from "@mui/material";
+import { CreateHeadersConfigWithToken } from "../AppConst.js";
+import { SearchPosts } from "../Services/PostService.js";
 
 const Search = () => {
+    const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [hasSearched, setHasSearched] = useState(false);
     const [loadingPost, setLoadingPost] = useState(false);
@@ -22,11 +25,30 @@ const Search = () => {
         setHasSearched(true);
     }
 
+    const handleSearch = async () => {
+        setLoadingPost(true);
+        const config = CreateHeadersConfigWithToken();
+        try {
+            const response = await SearchPosts(searchTerm, config);
+            const data = response.data;
+            setLoadingPost(false);
+            handleSearchResults(data);
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+    const handleSearchChange = (value) => {
+        setSearchTerm(value);
+    }
+
+
     return (
         <Box >
             <SearchField
-                handleSearchResults={handleSearchResults}
-                setLoading={setLoadingPost}
+                handleSearchChange={handleSearchChange}
+                handleSearch={handleSearch}
             />
             {(hasSearched && !searchResults?.length) &&
                 <Typography
