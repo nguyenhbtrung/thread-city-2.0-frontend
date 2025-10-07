@@ -1,5 +1,5 @@
 import SearchField from "../Components/SearchField";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import PostList from "../Components/PostList.js";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -12,13 +12,31 @@ const Search = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
     const [hasSearched, setHasSearched] = useState(false);
+    const [page, setPage] = useState(1);
     const [loadingPost, setLoadingPost] = useState(false);
+    const loadingPostRef = useRef(false);
+    const isLastPageRef = useRef(false);
     const dispatch = useDispatch();
+
+    const setLoadingPostRef = (value) => {
+        setLoadingPost(value);
+        loadingPostRef.current = value;
+    }
 
     useEffect(() => {
         dispatch(setTitle("Tìm kiếm"));
         dispatch(setId(1));
     }, []);
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    useEffect(() => {
+        if (page > 1) loadMorePost();
+    }, [page]);
 
     const handleSearchResults = (results) => {
         setSearchResults(results);
@@ -26,16 +44,18 @@ const Search = () => {
     }
 
     const handleSearch = async () => {
-        setLoadingPost(true);
+        setLoadingPostRef(true);
+        setPage(1);
+        isLastPageRef.current = false;
         const config = CreateHeadersConfigWithToken();
         try {
-            const response = await SearchPosts(searchTerm, config);
+            const response = await SearchPosts(searchTerm, 1, config);
             const data = response.data;
-            setLoadingPost(false);
             handleSearchResults(data);
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err);
+        } finally {
+            setLoadingPostRef(false);
         }
     }
 
@@ -43,6 +63,35 @@ const Search = () => {
         setSearchTerm(value);
     }
 
+    const handleScroll = () => {
+        const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+
+        if (scrollTop + clientHeight >= scrollHeight - window.innerHeight && !loadingPostRef.current && !isLastPageRef.current) {
+            setLoadingPostRef(true);
+            setPage(prev => prev + 1);
+        }
+    };
+
+    const loadMorePost = async () => {
+        if (!searchResults?.length) {
+            setLoadingPostRef(false);
+            return;
+        }
+        const config = CreateHeadersConfigWithToken();
+        try {
+            const response = await SearchPosts(searchTerm, page, config);
+            const data = response.data;
+            if (!data?.length) {
+                isLastPageRef.current = true;
+                return;
+            }
+            setSearchResults(prev => [...prev, ...data]);
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoadingPostRef(false);
+        }
+    }
 
     return (
         <Box >

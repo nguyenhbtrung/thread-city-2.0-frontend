@@ -19,6 +19,6 @@ export const DeletePost = (postId, config) => {
     return axios.delete(url + `/${postId}`, config);
 }
 
-export const SearchPosts = (searchTerm, config) => {
-    return axios.get(url + `/search?SearchTerm=${searchTerm}`, config);
+export const SearchPosts = (searchTerm, PageNumber, config) => {
+    return axios.get(url + `/search?SearchTerm=${searchTerm}&PageNumber=${PageNumber}`, config);
 };

@@ -9,7 +9,7 @@ const SearchField = (props) => {
     } = props;
 
     const handleSubmit = (e) => {
-        e.preventDefault(); // tránh reload trang
+        e.preventDefault();
         handleSearch();
     };
 
