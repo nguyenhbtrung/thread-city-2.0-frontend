@@ -7,6 +7,7 @@ import PostList from "../Components/PostList";
 import { GetNewsfeed } from "../Services/PostService";
 import { CreateHeadersConfigWithToken } from "../AppConst";
 import { setId, setTitle } from "../Redux/titleSlice";
+import { Typography } from "@mui/material";
 
 const Home = () => {
     const [state, setState] = useState({});
@@ -106,11 +107,22 @@ const Home = () => {
     // useEffect(() => console.log('state.posts', state?.posts), [state?.posts]);
 
     return (
-        <PostList
-            posts={posts}
-            loading={loadingPostRef.current}
-            onDeletedSuccessfully={ResetPage}
-        />
+        <>
+            {process.env.REACT_APP_ENV === "production" && !posts?.length && (
+                <Typography
+                    variant="body2"
+                    color="text.tertiary"
+                    sx={{ fontStyle: "italic" }}
+                >
+                    (Có thể cần chờ lên tới 50s để tải bài viết lần đầu do máy chủ tạm ngưng)
+                </Typography>
+            )}
+            <PostList
+                posts={posts}
+                loading={loadingPostRef.current}
+                onDeletedSuccessfully={ResetPage}
+            />
+        </>
     )
 }
 
