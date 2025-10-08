@@ -158,7 +158,7 @@ export default function Post(props) {
   };
 
   const handleClickNavigateToAuthor = () => {
-    navigate(`/profile/by-username/${data?.author}`);
+    navigate(`/profile/username/${data?.author}`);
   }
 
   React.useEffect(() => {
