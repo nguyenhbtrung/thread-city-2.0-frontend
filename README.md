@@ -1,70 +1,112 @@
-# Getting Started with Create React App
+# Thread City 2.0 Frontend - React + Material UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📌 Overview
+This project is **a demo of a social networking web application**. It consists of 2 parts: **Backend** and **Frontend**.  
+This is the **Frontend** repository in the project built with **React (CRA)**.  
+It features a modern UI powered by **Material UI**, global state management using **Redux Toolkit**, seamless API communication using **Axios**, and navigation handled by **React Router**.
 
-## Available Scripts
+Backend repository: [ThreadCity2.0BackEnd](https://github.com/yakciJ/ThreadCity2.0BackEnd)
 
-In the project directory, you can run:
+---
 
-### `yarn start`
+## 🚀 Tech Stack
+- [React](https://react.dev/)
+- [Material UI](https://mui.com/)
+- [Redux Toolkit](https://react-redux.js.org/)
+- [Axios](https://axios-http.com/)
+- [React Router](https://reactrouter.com/)
+- [Yarn](https://yarnpkg.com/) (Package Manager)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📂 Project Structure
+```
+.
+├── src/
+│   ├── assets/       # Static assets
+│   ├── Components/   # Reusable components
+│   ├── Redux/        # Redux global state management
+│   ├── Views/        # Page components
+│   ├── Services/     # API services
+│   ├── AppConst.js   # App global constants
+│   ├── App.js        # App router config
+│   └── index.js      # Entry point
+├── .env             # Environment variables
+├── package.json
+```
 
-### `yarn test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## ⚙️ Environment Variables
+Create a `.env` file in the project root and set the backend URL:
 
-### `yarn build`
+```env
+REACT_APP_API_BASE_URL=https://localhost:7135
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📦 Installation & Setup
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 1. Clone the repository
 
-### `yarn eject`
+```bash
+git clone https://github.com/nguyenhbtrung/thread-city-2.0-frontend.git
+cd thread-city-2.0-frontend
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 2. Install dependencies
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+yarn
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 3. Start development server
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+yarn start
+```
 
-## Learn More
+The app will be available at: [http://localhost:3000](http://localhost:3000)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🛠️ Available Scripts
 
-### Code Splitting
+```bash
+yarn start    # Start development server
+yarn build    # Build for production
+yarn test     # Run tests in interactive watch mode
+yarn eject    # Expose CRA configuration for full customization
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 🔒 Authentication
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- JWT-based authentication
+- Token stored in localStorage
+- Include the token in request headers for protected routes
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 📊 Features
+- Newfeeds
+- Search post by title or content
+- Infinite scroll for list of posts
+- Create new post
+- User profile
+- Like and comment on posts
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 📝 Notes
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* Ensure `.env` is configured properly
+* Backend server must be running for full functionality
+* Node.js 18+ recommended
+* Yarn 1.22+ recommended
+* For production deployment:
+  - Set proper environment variables
+  - Enable HTTPS
+  - Configure proper CORS settings
